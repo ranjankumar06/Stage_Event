@@ -17,6 +17,12 @@ module.exports ={
             if (EventAdd) {
                 return res.send({reponseCode:409,responseMessage:'Event already exists',result:[]})
             } else {
+                let image = [];
+                        for (let index = 0; index < req.files.length; index++) {
+                            let f = await commonFunction.uploadImage(req.files[index].path);
+                            image.push(f);
+                        }
+                        req.body.eventImages=image
                 let stime = new Date()
                 stime.setHours(09)+stime.setMinutes(00)+stime.setSeconds(00)
                 let startTime= stime.toLocaleTimeString()

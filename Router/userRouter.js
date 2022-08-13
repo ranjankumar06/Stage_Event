@@ -35,6 +35,11 @@ const upload = multer({storage:storage})
 *         description: mobileNumber is required.
 *         in: formData
 *         required: true
+*       - name: image
+*         description: image is required.
+*         in: formData
+*         type: file
+*         required: true
 *       - name: email
 *         description: email is required.
 *         in: formData
@@ -246,7 +251,7 @@ router.put("/forgotPassword",userRouter.forgotPassword)
 *       500:
 *         description: Internal server error.
 */
-router.put("/editProfile",auth.jwtToken,upload.single('image'),userRouter.editProfile)
+router.put("/editProfile",auth.jwtToken,userRouter.editProfile)
 /**
 * @swagger
 * /user/getProfile/{_id}:
@@ -354,29 +359,29 @@ router.put("/changePassword",auth.jwtToken,userRouter.changePassword)
 *         description: Internal server error.
 */
 router.get('/listUser',userRouter.listUser);
-/**
-* @swagger
-* /user/viewEvent/{_id}:
-*   get:
-*     tags:
-*       - USER MANAGEMENT
-*     description: Creating Docs for USER
-*     produces:
-*       - application/json
-*     parameters:
-*       - name: _id
-*         description: _id is required.
-*         in: header
-*         required: true
-*     responses:
-*       200:
-*         description: Done successfully.
-*       404:
-*         description: DATA NOT FOUND.
-*       500:
-*         description: Internal server error.
-*/
-router.get('/viewEvent/:_id',userRouter.viewEvent)
+// /**
+// * @swagger
+// * /user/viewEvent/{_id}:
+// *   get:
+// *     tags:
+// *       - USER MANAGEMENT
+// *     description: Creating Docs for USER
+// *     produces:
+// *       - application/json
+// *     parameters:
+// *       - name: _id
+// *         description: _id is required.
+// *         in: header
+// *         required: true
+// *     responses:
+// *       200:
+// *         description: Done successfully.
+// *       404:
+// *         description: DATA NOT FOUND.
+// *       500:
+// *         description: Internal server error.
+// */
+// router.get('/viewEvent/:_id',userRouter.viewEvent)
 
 
 module.exports =router

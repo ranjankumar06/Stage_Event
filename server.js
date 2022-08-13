@@ -4,7 +4,7 @@ const app= express();
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 require('./dbConnection/db');
-const PORT = 3001;
+const PORT = 3002;
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 app.use(bodyParser.urlencoded({ extended: true}))
@@ -24,7 +24,7 @@ const swaggerDefinition = {
       version: "1.0.0",
       description: "Swagger API Docs",
     },
-    host: `192.168.11.1:${PORT}`,
+    host: `localhost:${PORT}`,
     basePath: "/",
 };
    const options = {

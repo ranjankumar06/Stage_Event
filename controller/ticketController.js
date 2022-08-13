@@ -3,6 +3,8 @@ const organizerModel = require('../models/organizerModel');
 const commonFunction = require('../helper/commonFunction');
 const userModel = require('../models/userModel');
 const ticketModel = require('../models/ticketModel');
+const qrCode = require('qrcode')
+
 
 module.exports={
     ticketBook:async(req,res)=>{
@@ -38,7 +40,12 @@ module.exports={
                                         req.body.userId = user._id
                                         req.body.email = user.email
                                         req.body.slotEvent=data.eventName
-                                        const bookingSave = await ticketModel(req.body).save()
+                                       let stringData = JSON.stringify(user)
+
+                                        let qr = await qrCode.toDataURL(stringData)
+                                        let qrImage =await commonFunction.uploadImage(qr)
+                                       req.body.qrImg=qrImage
+                                       const bookingSave = await ticketModel(req.body).save()
                                         subject = "Book Ticket";
                                         text = `Your Book ticket Id is  ${bookingSave._id} .You are wait for confimation `;
                                         const mail = await commonFunction.sendMail(user.email, subject, text)
@@ -204,6 +211,10 @@ module.exports={
                                         req.body.userId = user._id
                                         req.body.email = user.email
                                         req.body.slotEvent = data.eventName
+                                        let stringData = JSON.stringify(user)
+                                        let qr = await qrCode.toDataURL(stringData)
+                                        let qrImage =await commonFunction.uploadImage(qr)
+                                       req.body.qrImg=qrImage
                                         const bookingSave = await ticketModel(req.body).save()
                                         subject = "Booking";
                                         text = `Your Slot Booking Id is  ${bookingSave._id} .You are wait for confimation `;

@@ -12,6 +12,9 @@ const ticketSchema = new Schema({
     slotTime:{
         type:String
     },
+    qrImg:{
+        type:String,
+      },
     email:{
         type:String
     },

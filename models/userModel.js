@@ -21,7 +21,9 @@ const userSchema= new Schema({
     dateOfBirth: {
       type: String
     }, 
-  
+    profilePic: {
+      type: String
+    },
     address: {
         type: String
     },

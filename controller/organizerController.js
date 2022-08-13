@@ -283,20 +283,45 @@ module.exports =
             return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
         }
     },
-    OrganizerViewEvent: async (req, res) => {
+    // OrganizerViewEvent: async (req, res) => {
+    //     try {
+    //         let query = { $and: [{_id:req.params._id }, { status: { $ne: "DELETE" } },  { userType:{$ne:"USER"}}], };
+    //       let organizersData = await organizerModel.findOne(query);
+    //       if(!organizersData){
+    //         res.send({responseCode:404,responseMessage: "Organizer Event data not found",responseResult:[]})
+    //       }else{
+    //         let organizerData = await organizerModel.paginate(query,{populate: 'addressId'});
+    //         if(organizerData.docs.length!=0){
+    //             res.send({responseCode:200,responseMessage:'Organizer Event  data found!',responseResult:organizerData})
+    //         }      
+    //       }
+    //     } catch (error) {
+    //       return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
+    //     }
+    // },
+    listOrganizer:async (req,res)=>{
         try {
-            let query = { $and: [{_id:req.params._id }, { status: { $ne: "DELETE" } },  { userType:{$ne:"USER"}}], };
-          let organizersData = await organizerModel.findOne(query);
-          if(!organizersData){
-            res.send({responseCode:404,responseMessage: "Organizer Event data not found",responseResult:[]})
-          }else{
-            let organizerData = await organizerModel.paginate(query,{populate: 'addressId'});
-            if(organizerData.docs.length!=0){
-                res.send({responseCode:200,responseMessage:'Organizer Event  data found!',responseResult:organizerData})
-            }      
-          }
+            let query = { $and: [{ status: { $ne: "DELETE" } }, { userType: 'ORGANIZER' }], };
+            if(req.query.search){
+                query.$or=[ 
+                    {name:{$regex:req.query.search,$option:'i'}},
+                    {email:{$regex:req.query.search,$option:'i'}},
+                ]
+            }
+            let options = {
+                page: parseInt(req.query.page) || 1,
+                limit: parseInt(req.body.limit) || 10,
+                populate: 'addressId',
+                sort: { createdAt: -1},
+            };
+            let userData = await organizerModel.paginate(query,options);
+            if(userData.docs.length==0){
+                res.send({responseCode:404,responseMessage:'Organizer not found!',responseResult:[]})
+            }else{
+                res.send({responseCode:200,responseMessage:'Organizer found!',responseResult:userData})
+            }
         } catch (error) {
-          return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
+        res.send({responseCode:501,responseMessage:'Something went wrong!',responseResult:error.message})
         }
     },
 

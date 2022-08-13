@@ -12,6 +12,9 @@ const organizerSchema= new Schema({
     mobileNumber:{
         type:String
     },
+    profilePic: {
+        type: String
+      },
     email:{
         type:String
     },

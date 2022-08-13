@@ -1,8 +1,13 @@
 const router =  require('express').Router();
 const eventRouter = require('../controller/eventController')
-// const multer = require('multer');
+const multer = require('multer');
 const auth = require('../middleware/auth')
-
+var storage = multer.diskStorage({
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+  })
+const upload = multer({storage:storage})
 
 /**
 * @swagger
@@ -78,8 +83,8 @@ const auth = require('../middleware/auth')
 *         description: price is required.
 *         in: formData
 *         required: true
-*       - name: image
-*         description: image is required.
+*       - name: eventImages
+*         description: eventImages is required.
 *         in: formData
 *         type: file
 *         required: true
@@ -95,7 +100,7 @@ const auth = require('../middleware/auth')
 *       500:
 *         description: Internal server error.
 */
-router.post('/addEvent',auth.subJwtToken,eventRouter.addEvent)
+router.post('/addEvent',auth.subJwtToken,upload.array('image',15),eventRouter.addEvent)
 /**
 * @swagger
 * /event/eventView:

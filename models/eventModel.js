@@ -46,9 +46,9 @@ const eventSchema = new Schema({
     endTime:{
         type:String
     },
-    image:{
-        type:String
-    },
+    eventImages:{
+        type:[String]
+      },
     description:{
         type:String
     },

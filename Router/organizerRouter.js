@@ -1,6 +1,13 @@
 const router =  require('express').Router();
 const organizerRouter = require('../controller/organizerController')
 const auth = require('../middleware/auth')
+const multer = require('multer')
+var storage = multer.diskStorage({
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+  })
+const upload = multer({storage:storage})
 
 
 
@@ -25,6 +32,11 @@ const auth = require('../middleware/auth')
 *       - name: mobileNumber
 *         description: mobileNumber is required.
 *         in: formData
+*         required: true
+*       - name: profilePic
+*         description: profilePic is required.
+*         in: formData
+*         type: file
 *         required: true
 *       - name: email
 *         description: email is required.
@@ -328,20 +340,38 @@ router.put("/OrganizerResetPassword",organizerRouter.OrganizerResetPassword)
 */
 router.put("/OrganizerChangePassword",auth.subJwtToken,organizerRouter.OrganizerChangePassword)
 
+// /**
+// * @swagger
+// * /organizer/OrganizerViewEvent/{_id}:
+// *   get:
+// *     tags:
+// *       - ORGANIZER MANAGEMENT
+// *     description: Creating Docs for ORGANIZER
+// *     produces:
+// *       - application/json
+// *     parameters:
+// *       - name: _id
+// *         description: _id is required.
+// *         in: header
+// *         required: true
+// *     responses:
+// *       200:
+// *         description: Done successfully.
+// *       404:
+// *         description: DATA NOT FOUND.
+// *       500:
+// *         description: Internal server error.
+// */
+// router.get('/OrganizerViewEvent/:_id',organizerRouter.OrganizerViewEvent)
 /**
 * @swagger
-* /organizer/OrganizerViewEvent/{_id}:
+* /organizer/listOrganizer:
 *   get:
 *     tags:
-*       - ORGANIZER MANAGEMENT
-*     description: Creating Docs for ORGANIZER
+*       - USER MANAGEMENT
+*     description: Creating Docs for USER
 *     produces:
 *       - application/json
-*     parameters:
-*       - name: _id
-*         description: _id is required.
-*         in: header
-*         required: true
 *     responses:
 *       200:
 *         description: Done successfully.
@@ -350,5 +380,5 @@ router.put("/OrganizerChangePassword",auth.subJwtToken,organizerRouter.Organizer
 *       500:
 *         description: Internal server error.
 */
-router.get('/OrganizerViewEvent/:_id',organizerRouter.OrganizerViewEvent)
+router.get('/listOrganizer',organizerRouter.listOrganizer);
 module.exports =router

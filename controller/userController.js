@@ -3,7 +3,7 @@ const addressModel = require('../models/addressModel')
 const bcrypt = require('bcryptjs'); 
 const jwt = require('jsonwebtoken')
 const commonFunction = require('../helper/commonFunction');
-const organizerModel = require('../models/organizerModel');
+// const organizerModel = require('../models/organizerModel');
 
 
 
@@ -11,6 +11,7 @@ module.exports =
 {
     signUp:async(req, res)=>
     {
+        // console.log(req,res);
         try
         {
             let result = await userModel.findOne({$and:[{$or:[{email:req.body.email},{mobileNumber:req.body.mobileNumber}]},{status:{$ne:"DELETE"}},{userType:'USER'}],},)
@@ -202,9 +203,9 @@ module.exports =
             if (!user) {
                 return res.send({ reponseCode: 404, responseMessage: 'User not found .', responseResult: [] });
             } else {
-                    let profilePic=req.file.path
-                    req.body.profilePic = await commonFunction.uploadImage(profilePic);
-                    req.body.profilePic = req.body.profilePic
+                    // let profilePic=req.file.path
+                    // req.body.profilePic = await commonFunction.uploadImage(profilePic);
+                    // req.body.profilePic = req.body.profilePic
                     let updateUser = await userModel.findByIdAndUpdate({ _id: user._id }, { $set: req.body }, { new: true })
                     if (updateUser) {
                         req.body.userId=updateUser._id;
@@ -311,22 +312,22 @@ module.exports =
         res.send({responseCode:501,responseMessage:'Something went wrong!',responseResult:error.message})
         }
     },
-    viewEvent: async (req, res) => {
-        try {
-            let query = { $and: [{_id:req.params._id }, { status: { $ne: "DELETE" } }, { userType: 'USER' }], };
-          let usersData = await userModel.findOne(query);
-          if(!usersData){
-            res.send({responseCode:404,responseMessage: "User Event data not found",responseResult:[]})
-          }else{
-            let userData = await userModel.paginate(query,{populate: 'addressId'});
-            if(userData.docs.length!=0){
-                res.send({responseCode:200,responseMessage:'User Event  data found!',responseResult:userData})
-            }      
-          }
-        } catch (error) {
-          return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
-        }
-    },
+    // viewEvent: async (req, res) => {
+    //     try {
+    //         let query = { $and: [{_id:req.params._id }, { status: { $ne: "DELETE" } }, { userType: 'USER' }], };
+    //       let usersData = await userModel.findOne(query);
+    //       if(!usersData){
+    //         res.send({responseCode:404,responseMessage: "User Event data not found",responseResult:[]})
+    //       }else{
+    //         let userData = await userModel.paginate(query,{populate: 'addressId'});
+    //         if(userData.docs.length!=0){
+    //             res.send({responseCode:200,responseMessage:'User Event  data found!',responseResult:userData})
+    //         }      
+    //       }
+    //     } catch (error) {
+    //       return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
+    //     }
+    // },
   
 }
 
