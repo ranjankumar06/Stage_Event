@@ -100,7 +100,7 @@ const upload = multer({storage:storage})
 *       500:
 *         description: Internal server error.
 */
-router.post('/addEvent',auth.subJwtToken,upload.array('image',15),eventRouter.addEvent)
+router.post('/addEvent',upload.array('image',15),eventRouter.addEvent)
 /**
 * @swagger
 * /event/eventView:
@@ -269,7 +269,7 @@ router.get('/EventList',eventRouter.EventList)
 *       500:
 *         description: Internal server error.
 */
-router.delete('/deleteEvent',auth.subJwtToken,eventRouter.deleteEvent)
+router.delete('/deleteEvent',eventRouter.deleteEvent)
 /**
  * @swagger
  * /event/upcomingEvent:

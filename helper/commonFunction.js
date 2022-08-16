@@ -33,8 +33,8 @@ module.exports = {
                     let sbTime= d2.toLocaleTimeString()
                     d2.setMinutes(00)+d2.setHours(14)+d2.setSeconds(00)
                     let ebTime= d2.toLocaleTimeString()
-                    let r= `Lunch/Break : ${sbTime} To ${ebTime}`
-                    ra.push(r);
+                    // let r= `Lunch/Break : ${sbTime} To ${ebTime}`
+                    // ra.push(r);
                 }
             }
             return  ra;

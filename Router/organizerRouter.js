@@ -249,7 +249,7 @@ router.put("/OrganizerForgotPassword",organizerRouter.OrganizerForgotPassword)
 *       500:
 *         description: Internal server error.
 */
-router.put("/OrganizerEditProfile",auth.subJwtToken,organizerRouter.OrganizerEditProfile)
+router.put("/OrganizerEditProfile",organizerRouter.OrganizerEditProfile)
 /**
 * @swagger
 * /organizer/OrganizerGetProfile/{_id}:
@@ -338,7 +338,7 @@ router.put("/OrganizerResetPassword",organizerRouter.OrganizerResetPassword)
 *       500:
 *         description: Internal server error.
 */
-router.put("/OrganizerChangePassword",auth.subJwtToken,organizerRouter.OrganizerChangePassword)
+router.put("/OrganizerChangePassword",organizerRouter.OrganizerChangePassword)
 
 // /**
 // * @swagger

@@ -25,11 +25,12 @@ module.exports = {
        return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
       }
    },
+   
   subJwtToken:async(req,res,next)=>{
     try{ 
         let decode = await jwt.verify(req.headers.token,'test');
     if(decode){
-      let data = await organizerModel.findOne({$or:[{_id:decode.adminId,userType:'ADMIN'},{_id:decode.orgaizerId,userType:'ORGANIZER'}]});
+      let data = await organizerModel.findOne({$or:[{_id:decode.orgaizerId,userType:'ORGANIZER'}]});
       if(data){
        if(data.status=='BLOCK'){
          res.send({responseMessage:'BLOCK'})

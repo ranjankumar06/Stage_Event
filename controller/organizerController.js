@@ -194,14 +194,14 @@ module.exports =
     },
     OrganizerEditProfile: async(req,res)=>{
         try {
-            let query = { $and: [{_id:req.dataId}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}], };
+            let query = { $and: [{email:req.body.email}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}], };
             let organizer = await organizerModel.findOne(query);
             if (!organizer) {
                 return res.send({ reponseCode: 404, responseMessage: 'Organizer not found .', responseResult: [] });
             } else {
-                    let profilePic=req.file.path
-                    req.body.profilePic = await commonFunction.uploadImage(profilePic);
-                    req.body.profilePic = req.body.profilePic
+                    // let profilePic=req.file.path
+                    // req.body.profilePic = await commonFunction.uploadImage(profilePic);
+                    // req.body.profilePic = req.body.profilePic
                     let updateOrganizer = await organizerModel.findByIdAndUpdate({ _id: organizer._id }, { $set: req.body }, { new: true })
                     if (updateOrganizer) {
                         req.body.userId=updateOrganizer._id;
@@ -253,7 +253,7 @@ module.exports =
     },
     OrganizerChangePassword:async(req,res)=>{
         try {
-            let query = { $and: [{_id:req.dataId }, { status: { $ne: "DELETE" } },  { userType:{$ne:"USER"}}], };
+            let query = { $and: [{email:req.body.email}, { status: { $ne: "DELETE" } },  { userType:{$ne:"USER"}}], };
             let organizerResult1 = await organizerModel.findOne(query);
             if(!organizerResult1){
               return res.send({reponseCode:404,responseMessage:'Organizer not found .',responseResult:[],});

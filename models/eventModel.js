@@ -9,12 +9,10 @@ const eventSchema = new Schema({
 		required: true
 	},
     startDate:{
-        type: Date,
-       require: true
+        type: [String],
     },
     endDate:{
-        type: Date,
-         require: true
+        type: [String],
     },
 
 	slots:{
@@ -38,7 +36,6 @@ const eventSchema = new Schema({
     },
     price:{
         type: Number,
-         required: true
     },
     startTime:{
         type:String
@@ -64,13 +61,13 @@ const eventSchema = new Schema({
     event_status: {
         type: String,
         enum : ['Upcomming','live',"Cancelled",'Done'],
-        required: true,
+        // required: true,
         default:"Upcomming"
     },
     event_category: {
         type: String,
         enum : ['Sports events','Trade fairs or exhibitions',"Live Events",'Charity/Fundraising Events','Corporate Events','Others'],
-        required: true
+        // required: true
     },
 },
     {

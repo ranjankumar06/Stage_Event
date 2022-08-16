@@ -9,7 +9,7 @@ const addressModel = require('../models/addressModel')
 module.exports ={
     addEvent:async(req,res)=>{
         try {
-            let query= { $and: [{ _id:req.dataId}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
+            let query= { $and: [{email:req.body.email}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
             let data=await organizerModel.findOne(query)
             if (data){
             let query1= { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } },], };
@@ -17,12 +17,12 @@ module.exports ={
             if (EventAdd) {
                 return res.send({reponseCode:409,responseMessage:'Event already exists',result:[]})
             } else {
-                let image = [];
-                        for (let index = 0; index < req.files.length; index++) {
-                            let f = await commonFunction.uploadImage(req.files[index].path);
-                            image.push(f);
-                        }
-                        req.body.eventImages=image
+                // let image = [];
+                //         for (let index = 0; index < req.files.length; index++) {
+                //             let f = await commonFunction.uploadImage(req.files[index].path);
+                //             image.push(f);
+                //         }
+                //         req.body.eventImages=image
                 let stime = new Date()
                 stime.setHours(09)+stime.setMinutes(00)+stime.setSeconds(00)
                 let startTime= stime.toLocaleTimeString()
@@ -128,12 +128,12 @@ module.exports ={
     },
     deleteEvent:async(req,res)=>{
         try {
-            let query= { $and: [{ _id:req.dataId}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
+            let query= { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
             let data=await organizerModel.findOne(query)
             if (!data) {
                 return res.send({reponseCode:404,responseMessage:'you are not admin or user',result:[]})
             } else {
-                let query = { $and: [{_id:req.body._id}, { status: { $ne: "DELETE" } },], };
+                let query = { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } },], };
                 let dEvent = await eventModel.findOne(query);
                 if (!dEvent) {
                     return res.send({responseCode:404,responseMessage:'Event not found!',responseResult:[]})
