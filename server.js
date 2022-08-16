@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
-// app.use(cors({origin: 'http://localhost:3000'}));
+
 
 app.use('/user',require('./Router/userRouter'))
 app.use('/admin',require('./Router/adminRouter'))
@@ -18,7 +18,7 @@ app.use('/organizer',require('./Router/organizerRouter'))
 app.use('/event',require('./Router/eventRouter'))
 app.use('/ticket',require('./Router/ticketRouter'))
 
-
+app.use(cors())
 
 
 const swaggerDefinition = {
@@ -42,24 +42,59 @@ const swaggerDefinition = {
     
    /** Server Listen **/
    app.use("/Ravi-API", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-//    Allow cors
 
-// app.use(function(req,res,next){
-//     res.header("Access-Control-Allow-Origin","*");
-//     res.header(
-//         "Allow-Control-Allow-Headers",
-//         "Origin,X-Requested-With,Content-Type,Accept,Authorization"
-//     );
-//     res.header('Access-Control-Allow-Methods','GET,PUT,PATCH,POST,DELETE');
-//     next();
-// });
-var corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-  }
-    app.get('/data',cors(corsOptions),function(req, res,next){
-        res.json({msg: 'This is CORS-enabled for only example.com.'})
-    next();
+   app.get("/no-cors", (req, res) => {
+      console.info("GET /no-cors");
+      res.json({
+        text: "You should not see this via a CORS request."
+      });
+    });
+    app.head("/simple-cors", cors(), (req, res) => {
+          console.info("HEAD /simple-cors");
+          res.sendStatus(204);
+        });
+        app.get("/simple-cors", cors(), (req, res) => {
+          console.info("GET /simple-cors");
+          res.json({
+            text: "Simple CORS requests are working. [GET]"
+          });
+        });
+        app.post("/simple-cors", cors(), (req, res) => {
+          console.info("POST /simple-cors");
+          res.json({
+            text: "Simple CORS requests are working. [POST]"
+          });
+        });
+        app.put("/simple-cors", cors(), (req, res) => {
+            console.info("PUT /simple-cors");
+            res.json({
+              text: "Simple CORS requests are working. [PUT]"
+            });
+          });
+        app.options("/complex-cors", cors());
+       app.delete("/complex-cors", cors(), (req, res) => {
+  console.info("DELETE /complex-cors");
+  res.json({
+    text: "Complex CORS requests are working. [DELETE]"
+  });
+});
+const issue2options = {
+      origin: true,
+      methods: ["POST"],
+      credentials: true,
+      maxAge: 3600
+    };
+    app.options("/issue-2", cors(issue2options));
+    app.post("/issue-2", cors(issue2options), (req, res) => {
+      console.info("POST /issue-2");
+      res.json({
+        text: "Issue #2 is fixed."
+      });
+    });
+    app.get('/data',function(req, res){
+        // res.json({msg: 'This is CORS-enabled for only example.com.'})
+    // next();
+    console.log('hi i am  Ravi');
 
 })
 app.listen(PORT,(err,res)=>{
@@ -69,3 +104,81 @@ app.listen(PORT,(err,res)=>{
         console.log('Server is running on',PORT);
     }
 });
+
+
+
+
+// const express = require("express");
+// const cors = require("cors");
+// const app = express();
+// require('./dbConnection/db');
+
+
+// app.use('/user',require('./Router/userRouter'))
+// app.use('/admin',require('./Router/adminRouter'))
+// app.use('/organizer',require('./Router/organizerRouter'))
+// app.use('/event',require('./Router/eventRouter'))
+// app.use('/ticket',require('./Router/ticketRouter'))
+// /* -------------------------------------------------------------------------- */
+
+// app.get("/no-cors", (req, res) => {
+//   console.info("GET /no-cors");
+//   res.json({
+//     text: "You should not see this via a CORS request."
+//   });
+// });
+
+// /* -------------------------------------------------------------------------- */
+
+// app.head("/simple-cors", cors(), (req, res) => {
+//   console.info("HEAD /simple-cors");
+//   res.sendStatus(204);
+// });
+// app.get("/simple-cors", cors(), (req, res) => {
+//   console.info("GET /simple-cors");
+//   res.json({
+//     text: "Simple CORS requests are working. [GET]"
+//   });
+// });
+// app.post("/simple-cors", cors(), (req, res) => {
+//   console.info("POST /simple-cors");
+//   res.json({
+//     text: "Simple CORS requests are working. [POST]"
+//   });
+// });
+
+// /* -------------------------------------------------------------------------- */
+
+// app.options("/complex-cors", cors());
+// app.delete("/complex-cors", cors(), (req, res) => {
+//   console.info("DELETE /complex-cors");
+//   res.json({
+//     text: "Complex CORS requests are working. [DELETE]"
+//   });
+// });
+
+// /* -------------------------------------------------------------------------- */
+
+// const issue2options = {
+//   origin: true,
+//   methods: ["POST"],
+//   credentials: true,
+//   maxAge: 3600
+// };
+// app.options("/issue-2", cors(issue2options));
+// app.post("/issue-2", cors(issue2options), (req, res) => {
+//   console.info("POST /issue-2");
+//   res.json({
+//     text: "Issue #2 is fixed."
+//   });
+// });
+
+// /* -------------------------------------------------------------------------- */
+
+// if (!module.parent) {
+//   const port = process.env.PORT || 3008;
+
+//   app.listen(port, () => {
+//     console.log("Express server listening on port " + port + ".");
+//   });
+// }
