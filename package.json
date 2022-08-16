@@ -22,6 +22,7 @@
     "image-downloader": "^4.3.0",
     "json-stringify": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
+    "killall": "^1.0.4",
     "mongoose": "^6.2.9",
     "mongoose-aggregate-paginate-v2": "^1.0.6",
     "mongoose-paginate": "^5.0.3",
