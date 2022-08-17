@@ -11,7 +11,7 @@ module.exports = {
         try {
             let ra=[]
             let d2 = new Date()
-            for(j=09;j<17;j++){
+            for(j=08;j<18;j++){
                 if(j<=12){
                     d2.setMinutes(00)+d2.setHours(j)+d2.setSeconds(00)
                     for(let i=0;i<4;i++){
@@ -29,10 +29,10 @@ module.exports = {
                         ra.push(r);
                     }
                 }else{
-                    d2.setMinutes(00)+d2.setHours(13)+d2.setSeconds(00)
-                    let sbTime= d2.toLocaleTimeString()
-                    d2.setMinutes(00)+d2.setHours(14)+d2.setSeconds(00)
-                    let ebTime= d2.toLocaleTimeString()
+                    // d2.setMinutes(00)+d2.setHours(13)+d2.setSeconds(00)
+                    // let sbTime= d2.toLocaleTimeString()
+                    // d2.setMinutes(00)+d2.setHours(14)+d2.setSeconds(00)
+                    // let ebTime= d2.toLocaleTimeString()
                     // let r= `Lunch/Break : ${sbTime} To ${ebTime}`
                     // ra.push(r);
                 }
@@ -101,10 +101,10 @@ module.exports = {
             return res.send({ responseCode: 501, responseMessage: "Something went wrong !", responseResult: error.message });
         }
     },
-    // generatedSNo(count){
-    //     var str =""+count
-    //     var pad ="00001" 
-    //     var ans= pad.substring(0,pad.length-str.length)+str
-    //     return ans;
-    // },  
+    generatedSNo(count){
+        var str =""+count
+        var pad ="00001" 
+        var ans= pad.substring(0,pad.length-str.length)+str
+        return ans;
+    } 
 }

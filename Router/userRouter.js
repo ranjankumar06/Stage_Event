@@ -188,6 +188,8 @@ router.post("/login",userRouter.login)
 *         description: Internal server error.
 */
 router.put("/forgotPassword",userRouter.forgotPassword)
+router.put("/otpVerifyForget",userRouter.otpVerifyForget)
+
 /**
 * @swagger
 * /user/editProfile:

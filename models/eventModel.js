@@ -37,10 +37,10 @@ const eventSchema = new Schema({
     price:{
         type: Number,
     },
-    startTime:{
+    openingTime:{
         type:String
     },
-    endTime:{
+    closingTime:{
         type:String
     },
     eventImages:{

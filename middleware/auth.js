@@ -30,7 +30,7 @@ module.exports = {
     try{ 
         let decode = await jwt.verify(req.headers.token,'test');
     if(decode){
-      let data = await organizerModel.findOne({$or:[{_id:decode.orgaizerId,userType:'ORGANIZER'}]});
+      let data = await organizerModel.findOne({$or:[{_id:decode.orgaizerId,userType:'ORGANIZER'},{_id:decode.adminId,userType:'ADMIN'}]});
       if(data){
        if(data.status=='BLOCK'){
          res.send({responseMessage:'BLOCK'})

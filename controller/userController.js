@@ -179,6 +179,39 @@ module.exports =
           return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
         }
     },
+    otpVerifyForget:async (req,res)=>
+    {
+        try 
+        {
+           let resultVerify =await userModel.findOne({$and:[{$or:[{email:req.body.email},{ _id:req.body._id}]},{status:{$ne:"DELETE"}},{userType:'USER'}],},)
+                     if(!resultVerify){
+                       return res.send({reponseCode:404,responseMessage:'User not found',responseResult:[]},);
+                    } else {
+                        if (resultVerify.otpVerify == true) {
+                            return res.send({ responseCode: 409, responseMessage: 'User already verified.', responseResult: resultVerify })
+                            }
+                        else{ 
+                            let currentTime =Date.now();
+                            if(req.body.otp==resultVerify.otp){
+                                if(resultVerify.otpExpireTime>=currentTime){
+                              let resVerify = await userModel.findByIdAndUpdate({_id:resultVerify._id},{$set:{otpVerify: true}},{new:true},)
+                                        if (resVerify) {
+                                            return res.send({reponseCode:200,responseMessage:'User verify successfully',result:[]},);
+                                        }
+                            }else{
+                                    res.send({reponseCode:410,responseMessage:'OTP is Expired',result:[]},);
+                                   }
+                            }else{
+                                res.send({reponseCode:400,responseMessage:'Wrong OTP',result:[]},);
+                            }
+
+                      }
+                    }
+        } catch (er) 
+        {
+           return res.send({reponseCode:501,responseMessage:'Something went worng',result:er.message})
+       }
+    },
     getProfile:async(req,res)=>{
         try{
             let query = { _id:req.params._id, status: { $ne: "DELETE" }, userType: 'USER' };
@@ -235,21 +268,20 @@ module.exports =
               return res.send({reponseCode:404,responseMessage:'User not found .',responseResult:[],});
             }
             else{
-                    let currentTime =Date.now();
-                    if(req.body.otp==userResult.otp)
-                    {
-                        if(userResult.otpExpireTime>=currentTime){
-                            req.body.newPassword=bcrypt.hashSync(req.body.newPassword)
-                            let userUpdate =await userModel.findByIdAndUpdate({_id:userResult._id},{$set:{password:req.body.newPassword,otpVerify:true,}},{new:true})   
+                    // let currentTime =Date.now();
+                    // if(req.body.otp==userResult.otp)
+                    
+                        // if(userResult.otpExpireTime>=currentTime)
+                //   const data = await userModel.findOne({email:req.body.email})  
+                let newPassword = req.body.newPassword;
+
+                            req.body.newPassword=bcrypt.hashSync(newPassword)
+                            let userUpdate =await userModel.findByIdAndUpdate({_id:userResult._id},{$set:{password:req.body.newPassword}},{new:true})   
                                 if (userUpdate) {
                                     return res.send({reponseCode:200,responseMessage:'Reset password successfully',result:userUpdate});
                                 }
-                    }else{
-                            res.send({reponseCode:410,responseMessage:'OTP is Expired',result:[]},);
-                           }
-                    }   else{
-                        res.send({reponseCode:400,responseMessage:'Wrong OTP',result:[]},);
-                    }
+                    
+                     
             }   
         } catch (error) {
             return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});

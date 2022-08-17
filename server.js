@@ -1,16 +1,19 @@
 const bodyParser = require('body-parser');
 const express = require('express');
-const cors=require("cors")
+const cors = require('cors');
 const app= express();
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 require('./dbConnection/db');
-const PORT = 3007;
+const PORT = 3013;
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
-
+// const cors = require('cors');
+app.use(cors({
+    origin: 'https://localhost:3000'
+}));
 
 app.use('/user',require('./Router/userRouter'))
 app.use('/admin',require('./Router/adminRouter'))
@@ -18,7 +21,7 @@ app.use('/organizer',require('./Router/organizerRouter'))
 app.use('/event',require('./Router/eventRouter'))
 app.use('/ticket',require('./Router/ticketRouter'))
 
-app.use(cors())
+// app.use(cors())
 
 
 const swaggerDefinition = {

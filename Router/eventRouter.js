@@ -219,7 +219,7 @@ router.get('/eventView',auth.jwtToken,eventRouter.eventView)
 *       500:
 *         description: Internal server error.
 */
-router.put('/updateEvent',auth.subJwtToken,eventRouter.updateEvent)
+router.put('/updateEvent',eventRouter.updateEvent)
 /**
 * @swagger
 * /event/EventList:

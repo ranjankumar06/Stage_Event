@@ -9,6 +9,9 @@ const ticketSchema = new Schema({
     eventName:{
         type:String
     },
+    serialNo:{
+        type:String
+    },
     slotTime:{
         type:String
     },
@@ -18,7 +21,7 @@ const ticketSchema = new Schema({
     email:{
         type:String
     },
-    slotDate:{
+    eventDate:{
         type:String
     },
     slotEvent:{

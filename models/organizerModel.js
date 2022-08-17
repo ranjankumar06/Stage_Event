@@ -56,3 +56,30 @@ const organizerSchema= new Schema({
 organizerSchema.plugin(mongoosePaginate) 
 const organizerModel = mongoose.model('organizer',organizerSchema);
 module.exports = organizerModel
+
+
+organizerModel.findOne(
+    { status: { $ne: "DELETE" }, userType: "ADMIN" },
+    (userErr, userRes) => {
+      if (userErr) {
+      } else if (userRes) {
+        console.log("Default admin already exist");
+      } else {
+        let admin = {
+          firstName: "Ravi",
+          lastName: "rai",
+          email: "raviprarai@gmail.com",
+          mobileNumber: 1234567890,
+          password: bcrypt.hashSync("12345678901"),
+          userType: "ADMIN",
+          otpVerify: true,
+        };
+        organizerModel(admin).save((saveErr, saveAdmin) => {
+          if (saveErr) {
+          } else {
+            console.log("Default admin created");
+          }
+        });
+      }
+    }
+   );

@@ -8,37 +8,73 @@ const addressModel = require('../models/addressModel')
 
 module.exports ={
     addEvent:async(req,res)=>{
+        // try {
+        //     let query= { $and: [{email:req.body.email}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
+        //     let data=await organizerModel.findOne(query)
+        //     if (data){
+        //     let query1= { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } },], };
+        //     let EventAdd= await eventModel.findOne(query1)
+        //     if (EventAdd) {
+        //         return res.send({reponseCode:409,responseMessage:'Event already exists',result:[]})
+        //     } else {
+        //         // let image = [];
+        //         //         for (let index = 0; index < req.files.length; index++) {
+        //         //             let f = await commonFunction.uploadImage(req.files[index].path);
+        //         //             image.push(f);
+        //         //         }
+        //         //         req.body.eventImages=image
+        //         let stime = new Date()
+        //         stime.setHours(09)+stime.setMinutes(00)+stime.setSeconds(00)
+        //         let startTime= stime.toLocaleTimeString()
+        //         req.body.openingTime=startTime
+        //         let eTime= new Date()
+        //         eTime.setHours(05)+eTime.setMinutes(00)+eTime.setSeconds(00)
+        //         let endTime= eTime.toLocaleTimeString()
+        //         req.body.closingTime=endTime
+        //         req.body.slots= await commonFunction.generateSlots()
+        //         let saveEvent = await  new eventModel(req.body).save()
+        //         if (saveEvent) {
+        //             let saveAddress = await new addressModel(req.body).save();
+        //             if(saveAddress){
+        //                 let updateEvent = await eventModel.findByIdAndUpdate({_id:saveEvent._id},{$set:{addressId:saveAddress._id}},{new:true})
+        //                 if (updateEvent) {
+        //                     return res.send({reponseCode:200,responseMessage:'Event add successfully',result:updateEvent,saveAddress})                          
+        //                 }
+        //             }
+        //         }
+        //     } 
+        //     }else{
+        //         return res.send({reponseCode:404,responseMessage:'you are not admin or organizer',result:[]})
+        //     }
+        // } catch (error) {
+        //     return res.send({reponseCode:501,responseMessage:'Something went worng',result:error.message})
+        // }
+
         try {
             let query= { $and: [{email:req.body.email}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
             let data=await organizerModel.findOne(query)
             if (data){
             let query1= { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } },], };
-            let EventAdd= await eventModel.findOne(query1)
-            if (EventAdd) {
+            let centerAdd= await eventModel.findOne(query1)
+            if (centerAdd) {
                 return res.send({reponseCode:409,responseMessage:'Event already exists',result:[]})
             } else {
-                // let image = [];
-                //         for (let index = 0; index < req.files.length; index++) {
-                //             let f = await commonFunction.uploadImage(req.files[index].path);
-                //             image.push(f);
-                //         }
-                //         req.body.eventImages=image
                 let stime = new Date()
-                stime.setHours(09)+stime.setMinutes(00)+stime.setSeconds(00)
+                stime.setHours(08)+stime.setMinutes(00)+stime.setSeconds(00)
                 let startTime= stime.toLocaleTimeString()
                 req.body.openingTime=startTime
                 let eTime= new Date()
-                eTime.setHours(05)+eTime.setMinutes(00)+eTime.setSeconds(00)
+                eTime.setHours(06)+eTime.setMinutes(00)+eTime.setSeconds(00)
                 let endTime= eTime.toLocaleTimeString()
                 req.body.closingTime=endTime
                 req.body.slots= await commonFunction.generateSlots()
-                let saveEvent = await  new eventModel(req.body).save()
-                if (saveEvent) {
+                let saveCenter = await  new eventModel(req.body).save()
+                if (saveCenter) {
                     let saveAddress = await new addressModel(req.body).save();
                     if(saveAddress){
-                        let updateEvent = await eventModel.findByIdAndUpdate({_id:saveEvent._id},{$set:{addressId:saveAddress._id}},{new:true})
-                        if (updateEvent) {
-                            return res.send({reponseCode:200,responseMessage:'Event add successfully',result:updateEvent,saveAddress})                          
+                        let updateCenter = await eventModel.findByIdAndUpdate({_id:saveCenter._id},{$set:{addressId:saveAddress._id}},{new:true})
+                        if (updateCenter) {
+                            return res.send({reponseCode:200,responseMessage:'Event add successfully',result:updateCenter,saveAddress})                          
                         }
                     }
                 }
@@ -49,6 +85,7 @@ module.exports ={
         } catch (error) {
             return res.send({reponseCode:501,responseMessage:'Something went worng',result:error.message})
         }
+
     },
     eventView:async(req,res)=>{
         try {
@@ -57,7 +94,7 @@ module.exports ={
             if (!user) {
                 return res.send({ reponseCode: 404, responseMessage: 'User not found .', responseResult: [] });
             } else {
-                let EventData = await eventModel.findOne({$and: [{_id:req.body._id}, { status: { $ne: "DELETE" } },],});
+                let EventData = await eventModel.findOne({$and: [{_dataId:req.body._dataId}, { status: { $ne: "DELETE" } },],});
             if(!EventData){
                 res.send({responseCode:404,responseMessage:'Event not found!',responseResult:[]})
             }else{
@@ -69,12 +106,48 @@ module.exports ={
         }
     },
     updateEvent:async (req,res)=>{
+        // try {
+        //     let query= { $and: [{ _id:req.dataId}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
+        //     let data=await organizerModel.findOne(query)
+        //     if (data){
+        //     let eventUp= await eventModel.findOne({ $and: [{_id:req.body._id}, { status: { $ne: "DELETE" } },], })
+        //     if (!eventUp) {
+        //         return res.send({reponseCode:404,responseMessage:'EVENT NOT FOUND',result:[]})
+        //     } else {
+        //         let stime = new Date()
+        //         stime.setHours(08)+stime.setMinutes(00)+stime.setSeconds(00)
+        //         let startTime= stime.toLocaleTimeString()
+        //         req.body.openingTime=startTime
+        //         let eTime= new Date()
+        //         eTime.setHours(06)+eTime.setMinutes(00)+eTime.setSeconds(00)
+        //         let endTime= eTime.toLocaleTimeString()
+        //         req.body.closingTime=endTime
+        //         req.body.slots= await commonFunction.generateSlots()
+        //         let saveEvent = await eventModel.findByIdAndUpdate({_id:eventUp._id},{$set:req.body},{new:true})
+        //         if (saveEvent) {
+        //             let saveAddress = await new addressModel(req.body).save();
+        //             if(saveAddress){
+        //                 let updateEvent = await eventModel.findByIdAndUpdate({_id:saveEvent._id},{$set:{addressId:saveAddress._id}},{new:true})
+        //                 if (updateEvent) {
+        //                     return res.send({reponseCode:200,responseMessage:'Event Update successfully',result:updateEvent,saveAddress})                          
+        //                 }
+        //             }
+        //         }
+        //     } 
+        //     }else{
+        //         return res.send({reponseCode:404,responseMessage:'you are not admin or organizer',result:[]})
+        //     }
+        // } catch (error) {
+        //     return res.send({reponseCode:501,responseMessage:'Something went worng',result:error.message})
+        // }
+
+
         try {
-            let query= { $and: [{ _id:req.dataId}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
+            let query= { $and: [{ email:req.body.email},{eventName:req.body.eventName}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
             let data=await organizerModel.findOne(query)
             if (data){
-            let eventUp= await eventModel.findOne({ $and: [{_id:req.body._id}, { status: { $ne: "DELETE" } },], })
-            if (!eventUp) {
+            let centerUp= await eventModel.findOne({ $and: [{email:req.body.email},{eventName:req.body.eventName}, { status: { $ne: "DELETE" } },], })
+            if (!centerUp) {
                 return res.send({reponseCode:404,responseMessage:'EVENT NOT FOUND',result:[]})
             } else {
                 let stime = new Date()
@@ -82,17 +155,17 @@ module.exports ={
                 let startTime= stime.toLocaleTimeString()
                 req.body.openingTime=startTime
                 let eTime= new Date()
-                eTime.setHours(05)+eTime.setMinutes(00)+eTime.setSeconds(00)
+                eTime.setHours(06)+eTime.setMinutes(00)+eTime.setSeconds(00)
                 let endTime= eTime.toLocaleTimeString()
                 req.body.closingTime=endTime
                 req.body.slots= await commonFunction.generateSlots()
-                let saveEvent = await eventModel.findByIdAndUpdate({_id:eventUp._id},{$set:req.body},{new:true})
-                if (saveEvent) {
+                let saveCenter = await eventModel.findByIdAndUpdate({_id:centerUp._id},{$set:req.body},{new:true})
+                if (saveCenter) {
                     let saveAddress = await new addressModel(req.body).save();
                     if(saveAddress){
-                        let updateEvent = await eventModel.findByIdAndUpdate({_id:saveEvent._id},{$set:{addressId:saveAddress._id}},{new:true})
-                        if (updateEvent) {
-                            return res.send({reponseCode:200,responseMessage:'Event Update successfully',result:updateEvent,saveAddress})                          
+                        let updateCenter = await eventModel.findByIdAndUpdate({_id:saveCenter._id},{$set:{addressId:saveAddress._id}},{new:true})
+                        if (updateCenter) {
+                            return res.send({reponseCode:200,responseMessage:'EVENT Update successfully',result:updateCenter,saveAddress})                          
                         }
                     }
                 }

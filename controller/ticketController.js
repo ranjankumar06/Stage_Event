@@ -8,21 +8,115 @@ const qrCode = require('qrcode')
 
 module.exports={
     ticketBook:async(req,res)=>{
+        // try {
+        //     let query = { $and: [{_id:req.dataId}, { status: { $ne: "DELETE" } }, { userType: 'USER' }], };
+        //     let user = await userModel.findOne(query);
+        //     if (!user) {
+        //         return res.send({ reponseCode: 404, responseMessage: 'User not found .', responseResult: [] });
+        //     } else {
+        //     let query1= { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } },{ userType: 'USER' },], };
+        //     let data= await eventModel.findOne(query1)
+        //     if (data) {
+        //         if (data.slots.length==1) {
+        //         return res.send({ reponseCode: 404, responseMessage: 'ticket are not available .', responseResult: [] });
+        //         } else {
+        //             const bookingFind = await ticketModel.findOne({userId:user._id})
+                     
+
+        //             if (bookingFind) {
+        //             return res.send({ reponseCode: 404, responseMessage: 'you are already booked a Ticket .', responseResult: [] });
+        //             } else {
+        //                 const r = req.body.slotDate
+        //                 const d = new Date().toISOString().split('T')[0];
+        //                 if (r==d) {
+        //                     let day =new Date(r)
+        //                     let sun =day.getDay()
+        //                     if (sun!=0) {
+        //                         const d1 = new Date().toLocaleTimeString()
+        //                         if (req.body.slotTime>=d1) {  
+        //                             const bsData = ({ $and: [{ slotTime: req.body.slotTimes }, { bookingDate: r }] });
+        //                             const bookData = await ticketModel.findOne(bsData)
+        //                             if (bookData) {
+        //                                 return res.send({ responseCode: 401, responseMessage: "Ticket Are Already Booked" });
+        //                             } else {
+        //                                 req.body.userId = user._id
+        //                                 req.body.email = user.email
+        //                                 req.body.slotEvent=data.eventName
+        //                                 req.body.serialNo = (a.slice(0,3))+"-"+commonFunction.generatedSNo(await ticketModel.count())
+        //                                let stringData = JSON.stringify(user)
+
+        //                                 let qr = await qrCode.toDataURL(stringData)
+        //                                 let qrImage =await commonFunction.uploadImage(qr)
+        //                                req.body.qrImg=qrImage
+        //                                const bookingSave = await ticketModel(req.body).save()
+        //                                 subject = "Book Ticket";
+        //                                 text = `Your Book ticket Id is  ${bookingSave._id} .You are wait for confimation `;
+        //                                 const mail = await commonFunction.sendMail(user.email, subject, text)
+        //                                 if (mail) {
+        //                                     return res.send({ responseCode: 200, responseMessage: "Booking Successfully", responseResult: bookingSave });
+        //                                 } else {
+        //                                     return res.send({ responseCode: 401, responseMessage: "Booking Failed" });
+        //                                 }
+        //                             }
+        //                         }else{
+        //                             return res.send({reponseCode:404,responseMessage:'you enter time before current time',result:[]})    
+        //                         }
+        //                     } else {
+        //                         return res.send({reponseCode:404,responseMessage:'Booking not allowed on sunday',result:[]})    
+        //                     } 
+        //                 }else if(new Date(r)>new Date(d)){
+        //                     let day =new Date(r)
+        //                     let sun =day.getDay()
+        //                     if (sun!=0) {
+        //                                 const bsData = ({ $and: [{ slotTime: req.body.slotTimes }, { bookingDate: r }] });
+        //                                 const bookData = await ticketModel.findOne(bsData)
+        //                                 if (bookData) {
+        //                                     return res.send({ responseCode: 401, responseMessage: "Slots Are Already Booked" });
+        //                                 } else {
+        //                                 req.body.userId = user._id
+        //                                 req.body.email = user.email
+        //                                 const bookingSave = await ticketModel(req.body).save()
+        //                                 subject = "Book";
+        //                                 text = `Your Slot Booking Id is  ${bookingSave._id} .You are wait for confimation `;
+        //                                 const mail = await commonFunction.sendMail(user.email, subject, text)
+        //                                 if (mail) {
+        //                                     return res.send({ responseCode: 200, responseMessage: "Booking Successfully", responseResult: bookingSave });
+        //                                 } else {
+        //                                     return res.send({ responseCode: 401, responseMessage: "Booking Failed" });
+        //                                 }
+        //                             }  
+        //                     } else {
+        //                     return res.send({reponseCode:404,responseMessage:'Booking not allowed on sunday',result:[]})    
+        //                     } 
+        //                 } else {
+        //                 return res.send({reponseCode:404,responseMessage:'you enter past date',result:[]})
+        //                 }
+        //             }
+        //         }
+        //     } else {
+        //     return res.send({reponseCode:404,responseMessage:'Event not found',result:[]})
+        //     }
+        // }
+        // } catch (error) {
+        //     return res.send({reponseCode:501,responseMessage:'Something went worng',result:error.message})
+        // }
+
+
         try {
             let query = { $and: [{_id:req.dataId}, { status: { $ne: "DELETE" } }, { userType: 'USER' }], };
             let user = await userModel.findOne(query);
             if (!user) {
                 return res.send({ reponseCode: 404, responseMessage: 'User not found .', responseResult: [] });
             } else {
-            let query1= { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } },], };
-            let data= await eventModel.findOne(query1)
+            let query1= { $and: [{centerName:req.body.centerName}, { status: { $ne: "DELETE" } },], };
+            let data= await centerModel.findOne(query1)
             if (data) {
                 if (data.slots.length==1) {
-                return res.send({ reponseCode: 404, responseMessage: 'ticket are not available .', responseResult: [] });
+                return res.send({ reponseCode: 404, responseMessage: 'slots are not available .', responseResult: [] });
                 } else {
-                    const bookingFind = await ticketModel.findOne({userId:user._id})
+                    const bookingFind = await bookingModel.findOne({userId:user._id})
                     if (bookingFind) {
-                    return res.send({ reponseCode: 404, responseMessage: 'you are already booked a Ticket .', responseResult: [] });
+                    return res.send({ reponseCode: 404, responseMessage: 'you are already booked a vaccine slot .', responseResult: [] });
                     } else {
                         const r = req.body.slotDate
                         const d = new Date().toISOString().split('T')[0];
@@ -33,21 +127,16 @@ module.exports={
                                 const d1 = new Date().toLocaleTimeString()
                                 if (req.body.slotTime>=d1) {  
                                     const bsData = ({ $and: [{ slotTime: req.body.slotTimes }, { bookingDate: r }] });
-                                    const bookData = await ticketModel.findOne(bsData)
+                                    const bookData = await bookingModel.findOne(bsData)
                                     if (bookData) {
-                                        return res.send({ responseCode: 401, responseMessage: "Ticket Are Already Booked" });
+                                        return res.send({ responseCode: 401, responseMessage: "Slots Are Already Booked" });
                                     } else {
                                         req.body.userId = user._id
                                         req.body.email = user.email
-                                        req.body.slotEvent=data.eventName
-                                       let stringData = JSON.stringify(user)
-
-                                        let qr = await qrCode.toDataURL(stringData)
-                                        let qrImage =await commonFunction.uploadImage(qr)
-                                       req.body.qrImg=qrImage
-                                       const bookingSave = await ticketModel(req.body).save()
-                                        subject = "Book Ticket";
-                                        text = `Your Book ticket Id is  ${bookingSave._id} .You are wait for confimation `;
+                                        req.body.slotCenter=data.centerName
+                                        const bookingSave = await bookingModel(req.body).save()
+                                        subject = "Appointment";
+                                        text = `Your Slot Booking Id is  ${bookingSave._id} .You are wait for confimation `;
                                         const mail = await commonFunction.sendMail(user.email, subject, text)
                                         if (mail) {
                                             return res.send({ responseCode: 200, responseMessage: "Booking Successfully", responseResult: bookingSave });
@@ -66,14 +155,14 @@ module.exports={
                             let sun =day.getDay()
                             if (sun!=0) {
                                         const bsData = ({ $and: [{ slotTime: req.body.slotTimes }, { bookingDate: r }] });
-                                        const bookData = await ticketModel.findOne(bsData)
+                                        const bookData = await bookingModel.findOne(bsData)
                                         if (bookData) {
                                             return res.send({ responseCode: 401, responseMessage: "Slots Are Already Booked" });
                                         } else {
                                         req.body.userId = user._id
                                         req.body.email = user.email
-                                        const bookingSave = await ticketModel(req.body).save()
-                                        subject = "Book";
+                                        const bookingSave = await bookingModel(req.body).save()
+                                        subject = "Appointment";
                                         text = `Your Slot Booking Id is  ${bookingSave._id} .You are wait for confimation `;
                                         const mail = await commonFunction.sendMail(user.email, subject, text)
                                         if (mail) {
@@ -91,7 +180,7 @@ module.exports={
                     }
                 }
             } else {
-            return res.send({reponseCode:404,responseMessage:'Event not found',result:[]})
+            return res.send({reponseCode:404,responseMessage:'center not found',result:[]})
             }
         }
         } catch (error) {
