@@ -175,6 +175,39 @@ module.exports =
           return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
         }
     },
+    OrgotpVerifyForget:async (req,res)=>
+    {
+        try 
+        {
+           let resultVerify =await organizerModel.findOne({$and:[{$or:[{email:req.body.email},{ _id:req.body._id}]},{status:{$ne:"DELETE"}},{ userType:{$ne:"USER"}}],},)
+                     if(!resultVerify){
+                       return res.send({reponseCode:404,responseMessage:'Organizer not found',responseResult:[]},);
+                    } else {
+                        if (resultVerify.otpVerify == true) {
+                            return res.send({ responseCode: 409, responseMessage: 'Organizer already verified.', responseResult: resultVerify })
+                            }
+                        else{ 
+                            let currentTime =Date.now();
+                            if(req.body.otp==resultVerify.otp){
+                                if(resultVerify.otpExpireTime>=currentTime){
+                              let resVerify = await organizerModel.findByIdAndUpdate({_id:resultVerify._id},{$set:{otpVerify: true}},{new:true},)
+                                        if (resVerify) {
+                                            return res.send({reponseCode:200,responseMessage:'Organizer verify successfully',result:[]},);
+                                        }
+                            }else{
+                                    res.send({reponseCode:410,responseMessage:'OTP is Expired',result:[]},);
+                                   }
+                            }else{
+                                res.send({reponseCode:400,responseMessage:'Wrong OTP',result:[]},);
+                            }
+
+                      }
+                    }
+        } catch (er) 
+        {
+           return res.send({reponseCode:501,responseMessage:'Something went worng',result:er.message})
+       }
+    },
     OrganizerGetProfile:async(req,res)=>{
         try{
             let query = { _id:req.params._id, status: { $ne: "DELETE" },   userType:{$ne:"USER"} };
@@ -224,33 +257,33 @@ module.exports =
         }
     },
     OrganizerResetPassword:async(req,res)=>{
-        try {
-            let query = {$and:[{$or:[{email:req.body.email},],},{status:{$ne:"DELETE"}}, { userType:{$ne:"USER"}}],};
-            let organizerResult = await organizerModel.findOne(query);
-            if(!organizerResult){
-              return res.send({reponseCode:404,responseMessage:'Organizer not found .',responseResult:[],});
+         try {
+                let query = {$and:[{$or:[{email:req.body.email},],},{status:{$ne:"DELETE"}},{ userType:{$ne:"USER"}}],};
+                let organizerResult = await organizerModel.findOne(query);
+                if(!organizerResult){
+                  return res.send({reponseCode:404,responseMessage:'Organizer not found .',responseResult:[],});
+                }
+                else{
+                        // let currentTime =Date.now();
+                        // if(req.body.otp==userResult.otp)
+                        
+                            // if(userResult.otpExpireTime>=currentTime)
+                    //   const data = await userModel.findOne({email:req.body.email})  
+                    let newPassword = req.body.newPassword;
+    
+                                req.body.newPassword=bcrypt.hashSync(newPassword)
+                                let userUpdate =await organizerModel.findByIdAndUpdate({_id:organizerResult._id},{$set:{password:req.body.newPassword}},{new:true})   
+                                    if (userUpdate) {
+                                        return res.send({reponseCode:200,responseMessage:'Reset password successfully',result:userUpdate});
+                                    }
+                        
+                         
+                }   
+            } catch (error) {
+                return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
             }
-            else{
-                    let currentTime =Date.now();
-                    if(req.body.otp==organizerResult.otp)
-                    {
-                        if(organizerResult.otpExpireTime>=currentTime){
-                            req.body.newPassword=bcrypt.hashSync(req.body.newPassword)
-                            let organizerUpdate =await organizerModel.findByIdAndUpdate({_id:organizerResult._id},{$set:{password:req.body.newPassword,otpVerify:true,}},{new:true})   
-                                if (organizerUpdate) {
-                                    return res.send({reponseCode:200,responseMessage:'Reset password successfully',result:organizerUpdate});
-                                }
-                    }else{
-                            res.send({reponseCode:410,responseMessage:'OTP is Expired',result:[]},);
-                           }
-                    }   else{
-                        res.send({reponseCode:400,responseMessage:'Wrong OTP',result:[]},);
-                    }
-            }   
-        } catch (error) {
-            return res.send({responseCode: 501,responseMessage: "Something went wrong!",responseResult: error.message,});
-        }
-    },
+        
+},
     OrganizerChangePassword:async(req,res)=>{
         try {
             let query = { $and: [{email:req.body.email}, { status: { $ne: "DELETE" } },  { userType:{$ne:"USER"}}], };
@@ -327,3 +360,5 @@ module.exports =
 
   
 }
+
+    

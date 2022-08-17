@@ -186,6 +186,8 @@ router.post("/OrganizerLogin",organizerRouter.OrganizerLogin)
 *         description: Internal server error.
 */
 router.put("/OrganizerForgotPassword",organizerRouter.OrganizerForgotPassword)
+router.put("/OrgotpVerifyForget",organizerRouter.OrgotpVerifyForget)
+
 /**
 * @swagger
 * /organizer/OrganizerEditProfile:
