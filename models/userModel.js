@@ -25,7 +25,16 @@ const userSchema= new Schema({
       type: String
     },
     address: {
-        type: String
+		type: String,
+	},
+    country:{
+		type: String,
+	},
+    city: {
+		type: String,
+	},
+    searchDate:{
+        type:[String],
     },
     otp:{
         type:String

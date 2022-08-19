@@ -21,9 +21,19 @@ const organizerSchema= new Schema({
     password:{
         type:String
     },
-    address: {
-        type: String
+    address:{
+      type: String,
     },
+    country:{
+      type: String,
+    },
+    city:{
+      type: String,
+    },
+    searchDate:{
+      type:[String],
+    },
+    
     otp:{
         type:String
     },

@@ -108,15 +108,15 @@ module.exports={
             if (!user) {
                 return res.send({ reponseCode: 404, responseMessage: 'User not found .', responseResult: [] });
             } else {
-            let query1= { $and: [{centerName:req.body.centerName}, { status: { $ne: "DELETE" } },], };
-            let data= await centerModel.findOne(query1)
+            let query1= { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } },], };
+            let data= await eventModel.findOne(query1)
             if (data) {
                 if (data.slots.length==1) {
                 return res.send({ reponseCode: 404, responseMessage: 'slots are not available .', responseResult: [] });
                 } else {
-                    const bookingFind = await bookingModel.findOne({userId:user._id})
+                    const bookingFind = await ticketModel.findOne({userId:user._id})
                     if (bookingFind) {
-                    return res.send({ reponseCode: 404, responseMessage: 'you are already booked a vaccine slot .', responseResult: [] });
+                    return res.send({ reponseCode: 404, responseMessage: 'you are already booked a ticket slot .', responseResult: [] });
                     } else {
                         const r = req.body.slotDate
                         const d = new Date().toISOString().split('T')[0];
@@ -127,15 +127,15 @@ module.exports={
                                 const d1 = new Date().toLocaleTimeString()
                                 if (req.body.slotTime>=d1) {  
                                     const bsData = ({ $and: [{ slotTime: req.body.slotTimes }, { bookingDate: r }] });
-                                    const bookData = await bookingModel.findOne(bsData)
+                                    const bookData = await ticketModel.findOne(bsData)
                                     if (bookData) {
                                         return res.send({ responseCode: 401, responseMessage: "Slots Are Already Booked" });
                                     } else {
                                         req.body.userId = user._id
                                         req.body.email = user.email
-                                        req.body.slotCenter=data.centerName
-                                        const bookingSave = await bookingModel(req.body).save()
-                                        subject = "Appointment";
+                                        req.body.slotCenter=data.eventName
+                                        const bookingSave = await ticketModel(req.body).save()
+                                        subject = "Booking";
                                         text = `Your Slot Booking Id is  ${bookingSave._id} .You are wait for confimation `;
                                         const mail = await commonFunction.sendMail(user.email, subject, text)
                                         if (mail) {
@@ -155,14 +155,14 @@ module.exports={
                             let sun =day.getDay()
                             if (sun!=0) {
                                         const bsData = ({ $and: [{ slotTime: req.body.slotTimes }, { bookingDate: r }] });
-                                        const bookData = await bookingModel.findOne(bsData)
+                                        const bookData = await ticketModel.findOne(bsData)
                                         if (bookData) {
                                             return res.send({ responseCode: 401, responseMessage: "Slots Are Already Booked" });
                                         } else {
                                         req.body.userId = user._id
                                         req.body.email = user.email
-                                        const bookingSave = await bookingModel(req.body).save()
-                                        subject = "Appointment";
+                                        const bookingSave = await ticketModel(req.body).save()
+                                        subject = "booking";
                                         text = `Your Slot Booking Id is  ${bookingSave._id} .You are wait for confimation `;
                                         const mail = await commonFunction.sendMail(user.email, subject, text)
                                         if (mail) {
@@ -180,7 +180,7 @@ module.exports={
                     }
                 }
             } else {
-            return res.send({reponseCode:404,responseMessage:'center not found',result:[]})
+            return res.send({reponseCode:404,responseMessage:'ticket not found',result:[]})
             }
         }
         } catch (error) {

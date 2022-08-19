@@ -21,8 +21,8 @@ const ticketSchema = new Schema({
     email:{
         type:String
     },
-    eventDate:{
-        type:String
+    slotDate:{
+        type:[String]
     },
     slotEvent:{
         type:String

@@ -2,6 +2,8 @@ const router =  require('express').Router();
 const eventRouter = require('../controller/eventController')
 const multer = require('multer');
 const auth = require('../middleware/auth')
+// const stats = require('../controller/eventController');
+// const utils = require('../lib/utils');
 var storage = multer.diskStorage({
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now())
@@ -287,7 +289,74 @@ router.delete('/deleteEvent',eventRouter.deleteEvent)
  *       500:
  *         description: Internal server error.
  */
-router.get('/upcomingEvent',eventRouter.upcomingEvent)
+router.get('/allUpcomingEvent',eventRouter.allUpcomingEvent)
+router.get('/searchUpcomingByName',eventRouter.searchUpcomingByName)
+router.get('/searchUpcomingByArtistName',eventRouter.searchUpcomingByArtistName)
+
+router.get('/searchUpcomingByCountry',eventRouter.searchUpcomingByCountry)
+router.get('/searchUpcomingByCity',eventRouter.searchUpcomingByCity)
+// router.get('/searchByDate',eventRouter.searchByDate)
+
+// router.post('/search', async (req, res, next) => {
+//   const body = req.body;
+
+//   if(typeof body.year === 'undefined' || typeof body.month === 'undefined' || typeof body.day === 'undefined') {
+//       return res.json({
+//           error: 'Missing required parameters.'
+//       });
+//   }
+
+//   const { year, month, day } = body;
+
+
+//   if(!utils.validYear(year)) {
+//       return res.json({
+//           error: 'Invalid year parameter.'
+//       });
+//   }
+
+//   if(!utils.validValue(month, 'month')) {
+//       return res.json({
+//           error: 'Invalid month parameter.'
+//       });
+//   }
+
+//   if(!utils.validValue(day, 'day')) {
+//       return res.json({
+//           error: 'Invalid day parameter.'
+//       });
+//   }
+
+//   const dateStart = new Date();
+
+//   dateStart.setUTCFullYear(parseInt(year, 10));
+//   dateStart.setUTCMonth(parseInt(month, 10));
+//   dateStart.setUTCDate(parseInt(day, 10));
+
+//   dateStart.setUTCHours(0, 0, 0);
+
+//   const dateMax = new Date();
+
+//   dateMax.setUTCFullYear(parseInt(year, 10));
+//   dateMax.setUTCMonth(parseInt(month, 10));
+//   dateMax.setUTCDate(parseInt(day, 10));
+//   dateMax.setUTCHours(23, 59, 59);
+
+//   try {
+//       const query = { date: {
+//               $gte: dateStart, $lte: dateMax
+//       } };
+//       const results = await stats.find(query);
+//       res.json(results);
+//   } catch (err) {
+//       res.json(err);
+//   }
+// });
+
+
+
+
+
 /**
  * @swagger
  * /event/upcomingeventsbycategory:
@@ -310,7 +379,7 @@ router.get('/upcomingEvent',eventRouter.upcomingEvent)
  *       500:
  *         description: Internal server error.
  */
-router.get('/upcomingeventsbycategory',eventRouter.upcomingeventsbycategory)
+// router.get('/upcomingeventsbycategory',eventRouter.upcomingeventsbycategory)
 
 
 /**
@@ -330,7 +399,7 @@ router.get('/upcomingeventsbycategory',eventRouter.upcomingeventsbycategory)
  *       500:
  *         description: Internal server error.
  */
-router.get('/completeEvent',eventRouter.completeEvent)
+// router.get('/completeEvent/:_id',eventRouter.completeEvent)
 /**
  * @swagger
  * /event/completedeventsbycategory:
@@ -353,7 +422,7 @@ router.get('/completeEvent',eventRouter.completeEvent)
  *       500:
  *         description: Internal server error.
  */
-router.get('/completedeventsbycategory',eventRouter.completedeventsbycategory)
+// router.get('/completedeventsbycategory',eventRouter.completedeventsbycategory)
 
 /**
  * @swagger
@@ -372,7 +441,7 @@ router.get('/completedeventsbycategory',eventRouter.completedeventsbycategory)
  *       500:
  *         description: Internal server error.
  */
-router.get('/liveEvent',eventRouter.liveEvent)
+// router.get('/liveEvent/:_id',eventRouter.liveEvent)
 /**
  * @swagger
  * /event/liveeventsbycategory:
@@ -395,7 +464,7 @@ router.get('/liveEvent',eventRouter.liveEvent)
  *       500:
  *         description: Internal server error.
  */
-router.get('/liveeventsbycategory',eventRouter.liveeventsbycategory)
+// router.get('/liveeventsbycategory',eventRouter.liveeventsbycategory)
 
 /**
  * @swagger
@@ -414,7 +483,7 @@ router.get('/liveeventsbycategory',eventRouter.liveeventsbycategory)
  *       500:
  *         description: Internal server error.
  */
- router.get('/cancelEvent',eventRouter.cancelEvent)
+//  router.get('/cancelEvent/:_id',eventRouter.cancelEvent)
  /**
  * @swagger
  * /event/canceleventsbycategory:
@@ -437,7 +506,10 @@ router.get('/liveeventsbycategory',eventRouter.liveeventsbycategory)
  *       500:
  *         description: Internal server error.
  */
- router.get('/ canceleventsbycategory',eventRouter. canceleventsbycategory)
+//  router.get('/ canceleventsbycategory',eventRouter. canceleventsbycategory)
+
+// router.get('/concartEvent/:_id',eventRouter.concartEvent)
+// router.get('/sportEvent/:_id',eventRouter.sportEvent)
 
 
 

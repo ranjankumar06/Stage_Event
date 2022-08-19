@@ -1,6 +1,8 @@
 
 const mongoose = require("mongoose");
-let aggregatePaginate =require('mongoose-aggregate-paginate-v2')
+// let aggregatePaginate =require('mongoose-aggregate-paginate-v2')
+const mongoosePaginate = require('mongoose-paginate')
+
 const Schema = mongoose.Schema;
 
 const eventSchema = new Schema({
@@ -8,11 +10,19 @@ const eventSchema = new Schema({
 		type: String,
 		required: true
 	},
+    artistName: {
+		type: String,
+		// required: true
+	},
     startDate:{
         type: [String],
     },
+
     endDate:{
         type: [String],
+    },
+    searchDate:{
+        type:[String],
     },
 
 	slots:{
@@ -29,6 +39,12 @@ const eventSchema = new Schema({
         }
     },
     address: {
+		type: String,
+	},
+    country:{
+		type: String,
+	},
+    city: {
 		type: String,
 	},
     contractNo:{
@@ -61,20 +77,28 @@ const eventSchema = new Schema({
     event_status: {
         type: String,
         enum : ['Upcomming','live',"Cancelled",'Done'],
-        // required: true,
+        required: false,
         default:"Upcomming"
     },
-    event_category: {
+    events:{
+       type:String,
+       enum:['WEEKDAY','WEEKEND'],
+       default:"WEEKDAY"
+    },
+    eventCategory: {
         type: String,
-        enum : ['Sports events','Trade fairs or exhibitions',"Live Events",'Charity/Fundraising Events','Corporate Events','Others'],
-        // required: true
+        enum : ['Sports events','Trade fairs or exhibitions','Charity/Fundraising Events','Corporate Events','Concart'],
+        required: false,
+        default:"Concart",
     },
 },
     {
     timestamps:true
 });
 
-eventSchema.plugin(aggregatePaginate);
+// eventSchema.plugin(aggregatePaginate);
+eventSchema.plugin(mongoosePaginate) 
+
 eventSchema.index({location: "2dsphere" });
 
 let eventModel = mongoose.model("event", eventSchema);
