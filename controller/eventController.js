@@ -2,9 +2,13 @@ const eventModel = require('../models/eventModel');
 const userModel = require('../models/userModel');
 const organizerModel = require('../models/organizerModel');
 const commonFunction = require('../helper/commonFunction');
+const multer = require('multer');
+
 // const commonDate = require('../helper/date');
 
 const addressModel = require('../models/addressModel')
+const download = require('image-downloader');
+
 // const stats = require('../models/stats');
 // const utils = require('../lib/utils');
 
@@ -53,25 +57,30 @@ module.exports ={
         // } catch (error) {
         //     return res.send({reponseCode:501,responseMessage:'Something went worng',result:error.message})
         // }
-
         try {
-            let query= { $or: [{email:req.body.email}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
-            let data=await organizerModel.findOne(query)
+            let query= { $and: [{email:req.body.email}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
+             let data=await organizerModel.findOne(query)
             if (data){
-            let query1= { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } },{ event_status:"live"}], };
+            let query1= {$and:[{$or:[{eventName:req.body.eventName}]},{status:{$ne:"DELETE"}}],};
             let centerAdd= await eventModel.findOne(query1)
             if (centerAdd) {
                 return res.send({reponseCode:409,responseMessage:'Event already exists',result:[]})
             } else {
+                let image = [];
+                        for (let index = 0; index < req.files.length; index++) {
+                            let f = await commonFunction.uploadImage(req.files[index].path);
+                            image.push(f);
+                        }
+                        req.body.eventImage=image
                 let stime = new Date()
-                stime.setHours(08)+stime.setMinutes(00)+stime.setSeconds(00)
+                // stime.setHours(08)+stime.setMinutes(00)+stime.setSeconds(00)
                 let startTime= stime.toLocaleTimeString()
                 req.body.openingTime=startTime
                 let eTime= new Date()
-                eTime.setHours(06)+eTime.setMinutes(00)+eTime.setSeconds(00)
+                // eTime.setHours(06)+eTime.setMinutes(00)+eTime.setSeconds(00)
                 let endTime= eTime.toLocaleTimeString()
                 req.body.closingTime=endTime
-                req.body.slots= await commonFunction.generateSlots()
+                // req.body.slots= await commonFunction.generateSlots()
                 let saveCenter = await  new eventModel(req.body).save()
                 if (saveCenter) {
                     let saveAddress = await new addressModel(req.body).save();
@@ -87,6 +96,7 @@ module.exports ={
                 return res.send({reponseCode:404,responseMessage:'you are not admin or organizer',result:[]})
             }
         } catch (error) {
+            console.log(error);
             return res.send({reponseCode:501,responseMessage:'Something went worng',result:error.message})
         }
 
@@ -154,15 +164,21 @@ module.exports ={
             if (!centerUp) {
                 return res.send({reponseCode:404,responseMessage:'EVENT NOT FOUND',result:[]})
             } else {
+                let image = [];
+                        for (let index = 0; index < req.files.length; index++) {
+                            let f = await commonFunction.uploadImage(req.files[index].path);
+                            image.push(f);
+                        }
+                        req.body.eventImage=image
                 let stime = new Date()
-                stime.setHours(09)+stime.setMinutes(00)+stime.setSeconds(00)
+                // stime.setHours(09)+stime.setMinutes(00)+stime.setSeconds(00)
                 let startTime= stime.toLocaleTimeString()
                 req.body.openingTime=startTime
                 let eTime= new Date()
-                eTime.setHours(06)+eTime.setMinutes(00)+eTime.setSeconds(00)
+                // eTime.setHours(06)+eTime.setMinutes(00)+eTime.setSeconds(00)
                 let endTime= eTime.toLocaleTimeString()
                 req.body.closingTime=endTime
-                req.body.slots= await commonFunction.generateSlots()
+                // req.body.slots= await commonFunction.generateSlots()
                 let saveCenter = await eventModel.findByIdAndUpdate({_id:centerUp._id},{$set:req.body},{new:true})
                 if (saveCenter) {
                     let saveAddress = await new addressModel(req.body).save();

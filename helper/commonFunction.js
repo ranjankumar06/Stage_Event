@@ -1,5 +1,12 @@
 const nodeMailer = require('nodemailer');
+const cloudinary = require('cloudinary').v2
 
+
+cloudinary.config({ 
+    cloud_name: 'dulgie7bh', 
+    api_key: '187969763262733', 
+    api_secret: 'p-z5d-D-mkG4iT1dQ2wSBX000kE' 
+  });
 
 module.exports = {
     otp: ()=>{

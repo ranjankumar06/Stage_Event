@@ -16,17 +16,17 @@ const eventSchema = new Schema({
 	},
     startDate:{
         type: [String],
+		required: true,
+        // now.Date
     },
 
     endDate:{
         type: [String],
+		required: true
+
     },
     searchDate:{
         type:[String],
-    },
-
-	slots:{
-		type:[String]
     },   
     location: {
         type: {
@@ -48,23 +48,33 @@ const eventSchema = new Schema({
 		type: String,
 	},
     contractNo:{
-        type:Number
+        type:Number,
+		required: true
+
     },
     price:{
         type: Number,
+		required: true
+
     },
     openingTime:{
-        type:String
+        type:String,
+		required: true
+
     },
     closingTime:{
-        type:String
+        type:String,
+		required: true
+
     },
-    eventImages:{
+    eventImage:{
         type:[String]
       },
     description:{
         type:String
     },
+    createdAt: Date,
+    updatedAt: Date,
     addressId:{
         type:Schema.Types.ObjectId,
         ref:'address'
@@ -95,7 +105,13 @@ const eventSchema = new Schema({
     {
     timestamps:true
 });
-
+eventSchema.pre('save', function(next) {
+	const currentDate = new Date();
+    if (!this.createdDate){
+        this.createdDate = currentDate;
+    }
+    next();
+});
 // eventSchema.plugin(aggregatePaginate);
 eventSchema.plugin(mongoosePaginate) 
 
