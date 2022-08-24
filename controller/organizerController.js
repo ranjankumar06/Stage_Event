@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const commonFunction = require('../helper/commonFunction');
 const organizerModel = require('../models/organizerModel');
+const ticketModel = require('../models/ticketModel');
+
 
 module.exports =
 {

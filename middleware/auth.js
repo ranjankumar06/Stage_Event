@@ -7,7 +7,7 @@ module.exports = {
       try{ 
           let decode = await jwt.verify(req.headers.token,'test');
       if(decode){
-        let data = await userModel.findOne({_id:decode.userId,userType:'USER'});
+        let data = await userModel.findOne({$or:[{_id:decode.userId,userType:'USER'},{_id:decode.organizerId,userType:'ORGANIZER'}]});
         if(data){
          if(data.status=='BLOCK'){
            res.send({responseMessage:'BLOCK'})
@@ -30,7 +30,7 @@ module.exports = {
     try{ 
         let decode = await jwt.verify(req.headers.token,'test');
     if(decode){
-      let data = await organizerModel.findOne({$or:[{_id:decode.orgaizerId,userType:'ORGANIZER'},{_id:decode.adminId,userType:'ADMIN'}]});
+      let data = await organizerModel.findOne({$or:[{_id:decode.adminId,userType:'ADMIN'}]});
       if(data){
        if(data.status=='BLOCK'){
          res.send({responseMessage:'BLOCK'})

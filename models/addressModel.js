@@ -7,6 +7,10 @@ const addressSchema = new Schema(
      type:Schema.Types.ObjectId,
      ref:'user'
    },
+   ticketId:{
+    type:Schema.Types.ObjectId,
+    ref:'ticket'
+  },
    street: {
      type: String,
    },

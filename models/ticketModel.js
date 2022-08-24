@@ -6,26 +6,31 @@ const ticketSchema = new Schema({
     userId:{
         type:String
     },
-    eventName:{
+   eventName:{
         type:String
     },
+    email:{
+        type:String
+    },
+    counter:{
+        type:Number,
+      },
     serialNo:{
+        type:String
+    },
+    price:{
         type:String
     },
     slotTime:{
         type:String
     },
+   
     qrImg:{
         type:String,
       },
-    email:{
-        type:String
-    },
+ 
     slotDate:{
         type:[String]
-    },
-    slotEvent:{
-        type:String
     },
     status:{
         type:String,
@@ -35,13 +40,15 @@ const ticketSchema = new Schema({
     ticket_status:{
         type: String,
         enum:["SHOW","BOOK","BUY"],
-        required:true,
+        // required:true,
+        default:"BOOK"
+
       },
-      status:{
+      userType:{
         type:String,
-        enum:["BOOKED","PENDING","INQUERY"],
-        default:"PENDING"
-    },
+        enum:["USER","ORGANIZER","ADMIN"],
+        default:"USER"
+    }
     },
     {
         timestamps:true

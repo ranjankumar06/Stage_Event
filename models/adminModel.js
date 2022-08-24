@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')
 const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate')
-const AdminSchema= new Schema({
+const adminSchema= new Schema({
     name: { type: String,required: true },
     email: { type: String,required: true },
     password: { type: String, required: true },
@@ -21,6 +21,6 @@ const AdminSchema= new Schema({
 
 );
 
-AdminSchema.plugin(mongoosePaginate)  
-const AdminModel = mongoose.model('Admin',AdminSchema);
-module.exports = AdminModel
+adminSchema.plugin(mongoosePaginate)  
+const adminModel = mongoose.model('admin',adminSchema);
+module.exports = adminModel

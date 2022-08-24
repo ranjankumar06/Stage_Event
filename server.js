@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const app= express();
 require('./dbConnection/db');
-const PORT = 3014;
+const PORT = 3000;
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 app.use(bodyParser.urlencoded({ extended: true}))
@@ -21,6 +21,8 @@ app.use('/ticket',require('./Router/ticketRouter'))
 app.use('/contactUs',require('./Router/contactUsRouter'))
 app.use('/blog',require('./Router/blogRouter'))
 app.use('/bankdetails',require('./Router/bankdetailsRouter'))
+app.use('/sit',require('./Router/sitRouter'))
+
 
 
 

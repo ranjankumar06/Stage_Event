@@ -1,6 +1,17 @@
 const router =  require('express').Router();
 const ticketRouter = require('../controller/ticketController')
 const auth = require('../middleware/auth')
+
+const multer = require('multer')
+var storage = multer.diskStorage({
+    // destination: function (req, file, cb) {
+    //   cb(null, 'uploads')
+    // },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+  })
+const upload = multer({storage:storage})
 /**
 * @swagger
 * /ticket/ticketBook:
@@ -43,7 +54,7 @@ const auth = require('../middleware/auth')
 *       500:
 *         description: Internal server error.
 */
-router.post("/ticketBook",auth.jwtToken,ticketRouter.ticketBook)
+router.post("/ticketBook",upload.array('image'),auth.jwtToken,ticketRouter.ticketBook)
 /**
 * @swagger
 * /ticket/ticketApprove:
@@ -70,7 +81,7 @@ router.post("/ticketBook",auth.jwtToken,ticketRouter.ticketBook)
 *       500:
 *         description: Internal server error.
 */
-router.put("/ticketApprove",auth.subJwtToken,ticketRouter.ticketApprove)
+// router.put("/ticketApprove",auth.subJwtToken,ticketRouter.ticketApprove)
 /**
 * @swagger
 * /ticket/viewTicketDetails:
@@ -97,7 +108,7 @@ router.put("/ticketApprove",auth.subJwtToken,ticketRouter.ticketApprove)
 *       500:
 *         description: Internal server error.
 */
-router.get("/viewTicketDetails",auth.jwtToken,ticketRouter.viewTicketDetails)
+router.get("/viewTicketDetails",ticketRouter.viewTicketDetails)
 /**
 * @swagger
 * /ticket/updateBooking:
@@ -186,7 +197,7 @@ router.delete("/cancelTcketByUser",auth.jwtToken,ticketRouter.cancelTcketByUser)
 *       500:
 *         description: Internal server error.
 */
-router.delete("/cancelTicketByOrganizer",auth.subJwtToken,ticketRouter.cancelTicketByOrganizer)
+// router.delete("/cancelTicketByOrganizer",ticketRouter.cancelTicketByOrganizer)
 
 /**
 * @swagger
@@ -210,7 +221,7 @@ router.delete("/cancelTicketByOrganizer",auth.subJwtToken,ticketRouter.cancelTic
 *       500:
 *         description: Internal server error.
 */
-router.get("/bookingTicketList",auth.subJwtToken,ticketRouter.bookingTicketList)
+router.get("/bookingTicketList",ticketRouter.bookingTicketList)
 
 
 module.exports=router

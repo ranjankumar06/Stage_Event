@@ -73,8 +73,7 @@ const eventSchema = new Schema({
     description:{
         type:String
     },
-    createdAt: Date,
-    updatedAt: Date,
+ 
     addressId:{
         type:Schema.Types.ObjectId,
         ref:'address'

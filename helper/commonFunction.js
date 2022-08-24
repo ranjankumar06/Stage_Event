@@ -84,12 +84,12 @@ module.exports = {
                 port: 587,
                 secure: false,
                 auth: {
-                    user: "raviprarai@gmail.com",
-                    pass: "agvppvgwmflpbioz",
+                    user: "xaltamravi@gmail.com",
+                    pass: "Ravi@12345",
                 },
             });
             let options = {
-                from: "raviprarai@gmail.com",
+                from: "xaltamravi@gmail.com",
                 to:email ,
                 subject: subject, // Subject line
                 text: text
