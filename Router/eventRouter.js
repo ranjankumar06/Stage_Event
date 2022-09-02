@@ -297,6 +297,7 @@ router.get('/searchUpcomingByArtistName',eventRouter.searchUpcomingByArtistName)
 
 router.get('/searchUpcomingByCountry',eventRouter.searchUpcomingByCountry)
 router.get('/searchUpcomingByCity',eventRouter.searchUpcomingByCity)
+router.get('/geteventById/:id',eventRouter.geteventById)
 // router.get('/searchByDate',eventRouter.searchByDate)
 
 // router.post('/search', async (req, res, next) => {

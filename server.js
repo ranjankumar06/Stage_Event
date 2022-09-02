@@ -1,13 +1,16 @@
 const bodyParser = require('body-parser');
 const express = require('express');
+require("dotenv").config();
 const cors = require('cors');
 const app= express();
 require('./dbConnection/db');
-const PORT = 3000;
+
+const PORT = 3003;
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
+
 
 app.use(cors({
   origin: '*'
@@ -22,6 +25,7 @@ app.use('/contactUs',require('./Router/contactUsRouter'))
 app.use('/blog',require('./Router/blogRouter'))
 app.use('/bankdetails',require('./Router/bankdetailsRouter'))
 app.use('/sit',require('./Router/sitRouter'))
+app.use('/eventCategory',require('./Router/eventCategoryRouter'))
 
 
 

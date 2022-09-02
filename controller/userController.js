@@ -52,7 +52,7 @@ module.exports =
                                 if(saveAddress){
                                 let updateUser = await userModel.findByIdAndUpdate({_id:userSave._id},{$set:{addressId:saveAddress._id,otp:req.body.otp}},{new:true})
                                 if (updateUser) {
-                                return res.send({reponseCode:200,responseMessage:'Signup successfully',result:updateUser,saveAddress})                          
+                                return res.send({reponseCode:200,success:true,responseMessage:'Signup successfully',result:updateUser,saveAddress})                          
                                    }
                                 }
                             }
@@ -116,7 +116,7 @@ module.exports =
                 if(mailResult){
                     let updateUser = await userModel.findByIdAndUpdate({_id:userResult._id},{$set:{otpVerify:false,otp:otp,otpExpireTime:expireTime}},{new:true})
                     if(updateUser){
-                        return res.send({reponseCode:200,responseMessage:'OTP send successfully .',responseResult:updateUser,});
+                        return res.send({reponseCode:200,success:true,responseMessage:'OTP send successfully .',responseResult:updateUser,});
                     }
                 }
             }
@@ -130,21 +130,21 @@ module.exports =
           let query = {$and:[{$or:[{email:req.body.email},{mobileNumber:req.body.email}]},{status:{$ne:"DELETE"}},{userType:'USER'}],}
           let userResult = await userModel.findOne(query);
           if(!userResult){
-            return res.send({reponseCode:404,responseMessage:'User not found .',responseResult:[],});
+            return res.send({reponseCode:404,success:false,responseMessage:'User not found .',responseResult:[],});
           }
           else{
-            if(userResult.otpVerify==false){
-                return res.send({reponseCode:401,responseMessage:'User not verified',responseResult:[]},);
+            if(userResult.otpVerify===false){
+                return res.send({reponseCode:401,verify:true,responseMessage:'User not verified',responseResult:[]},);
             }
             else{
                 let passCheck = bcrypt.compareSync(req.body.password,userResult.password);
                 if(passCheck==false){
-                  return res.send({reponseCode:401,responseMessage:'Incorrect password.',})
+                  return res.send({reponseCode:401,success:false,responseMessage:'Incorrect password.',})
                 }
                 else{
                     let dataToken = {userId:userResult._id,email:userResult.email}
                       let token = jwt.sign(dataToken,'test',{expiresIn:'1h'})
-                  return res.send({reponseCode:200,responseMessage:'login Successfully',responseResult:userResult,token},); 
+                  return res.send({reponseCode:200,success:true,responseMessage:'login Successfully',responseResult:userResult,token},); 
                 }
             }
           }

@@ -7,8 +7,8 @@ const contactUsSchema= new Schema({
         type:String,
         trim: true,
         required: [true, "Please provide name"],
-        minlength:[3,'Name cannot be less than 3 char`s'],
-        maxlength: [100, "Name can not be more than 100 characters"],
+        minlength:[3,'Name cannot be less than 30 char`s'],
+        maxlength: [600, "Name can not be more than 600 characters"],
     },
     email:{
         type:String,

@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/Evant',(err, res)=>
-{
-    if(err)
-    {
-        console.log('Database connection error',err);
-    }
-    else
-    {
-        console.log('Database is connected');
-    }
+
+//const url = "mongodb+srv://eventApi:event12345@cluster0.jtwbzqk.mongodb.net/?retryWrites=true&w=majority";
+const urlDb=process.env.MONGODBURL;
+mongoose.connect(urlDb, {useNewUrlParser: true,
+useUnifiedTopology: true}).then(()=>{
+    console.log('Database is connected');
+}).catch((error)=>{
+    console.log('Database connection error',error.message);
 });

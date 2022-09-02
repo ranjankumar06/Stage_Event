@@ -96,7 +96,7 @@ module.exports ={
                 return res.send({reponseCode:404,responseMessage:'you are not admin or organizer',result:[]})
             }
         } catch (error) {
-            console.log(error);
+            console.log(error,"what error,.............");
             return res.send({reponseCode:501,responseMessage:'Something went worng',result:error.message})
         }
 
@@ -268,6 +268,7 @@ module.exports ={
     },
     searchUpcomingByName:async(req,res)=>{
         try {
+            console.log(res,"searchUpcomingByName.............")
             let query = { $and: [{eventName:req.body.eventName}, { status: { $ne: "DELETE" } }, { userType: 'USER' }], };
             let user = await userModel.findOne(query);
             if (!user) {
@@ -310,6 +311,7 @@ module.exports ={
                 return res.send({ reponseCode: 404, responseMessage: 'Upcoming not found .', responseResult: [] });
             } else {
                 let EventData = await eventModel.findOne({$and: [{country:req.body.country}, { status: { $ne: "DELETE" } },],});
+                console.log(EventData,"EventData.....country")
             if(!EventData){
                 res.send({responseCode:404,responseMessage:'Upcoming not found!',responseResult:[]})
             }else{
@@ -328,8 +330,11 @@ module.exports ={
                 return res.send({ reponseCode: 404, responseMessage: 'Upcoming not found .', responseResult: [] });
             } else {
                 let EventData = await eventModel.findOne({$and: [{city:req.body.city}, { status: { $ne: "DELETE" } },],});
+                console.log(EventData,"EventData.....city")
             if(!EventData){
+                console.log(EventData,"EventData.....city")
                 res.send({responseCode:404,responseMessage:'Upcoming not found!',responseResult:[]})
+                
             }else{
                 res.send({responseCode:200,responseMessage:'Upcoming found Successfully',responseResult:EventData})
             }
@@ -338,6 +343,17 @@ module.exports ={
             return res.send({ responseCode: 501, responseMessage: "somehting went wrong", responseResult: error.message });
         }
     },
+    geteventById:async(req,res)=>{
+       try {
+        let EventData= await  eventModel.findById(req.params.id);
+        
+        res.send({responseCode:200,responseMessage:'find result',responseResult:EventData})
+
+       } catch (error) {
+        console.log(error)
+       }
+    },
+ 
  
 
 }

@@ -15,7 +15,7 @@ module.exports =
              contactNumber,
             });
             
-       res.status(200).json( contactUs );
+       res.status(200).json( {success:true ,message:'contact save succesfully',contactUs} );
     // return res.send({reponseCode:200,responseMessage:'Messege send',result:contactUs})                          
 
             

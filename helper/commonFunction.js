@@ -1,4 +1,5 @@
 const nodeMailer = require('nodemailer');
+const { serveWithOptions } = require('swagger-ui-express');
 const cloudinary = require('cloudinary').v2
 
 
@@ -84,17 +85,18 @@ module.exports = {
                 port: 587,
                 secure: false,
                 auth: {
-                    user: "xaltamravi@gmail.com",
-                    pass: "Ravi@12345",
+                    user: "stageeventofficial@gmail.com",
+                    pass: "damaziigfpbyqvwy",
                 },
             });
             let options = {
-                from: "xaltamravi@gmail.com",
+                from: "stageeventofficial@gmail.com",
                 to:email ,
                 subject: subject, // Subject line
                 text: text
               
             }
+            console.log(options)
             return await transporter.sendMail(options)
         } catch (error) {
             return res.send({ responseCode: 501, responseMessage: "Something went wrong !", responseResult: error.message })

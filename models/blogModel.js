@@ -25,7 +25,7 @@ const blogSchema= new Schema({
         type:String,
         required:true,
         minlength:[3,'Name cannot be less than 3 char`s'],
-        maxlength: [100, "Name can not be more than 100 characters"],
+        maxlength: [600, "Name can not be more than 100 characters"],
     },
     addressId:{
         type:Schema.Types.ObjectId,

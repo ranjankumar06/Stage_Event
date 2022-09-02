@@ -8,7 +8,8 @@ const Schema = mongoose.Schema;
 const eventSchema = new Schema({
 	eventName: {
 		type: String,
-		required: true
+		required: true,
+        
 	},
     artistName: {
 		type: String,
@@ -100,6 +101,36 @@ const eventSchema = new Schema({
         required: false,
         default:"Concart",
     },
+    // ticket: [
+    // { 
+    //       goldDetails:[
+    //               { 
+    //                 goldSeatPrice: { type: Number, default: 0 },
+    //                  goldSeats: { type: Number, default: 0 },
+    //                 //  required: true
+    //                }
+    //             ],
+    //         },
+    // {
+    //      silverDetails:[
+    //         {
+    //             silverSeatPrice: { type: Number, default: 0 ,},
+    //             silverSeats: { type: Number, default: 0, },
+    //         }
+    //        ]
+    //  },
+    //  {
+    //     vipDetails:[
+    //        {
+    //         vipSeatPrice: { type: Number, default: 0 ,},
+    //         vipSeats: { type: Number, default: 0, },
+    //        }
+    //       ]
+    // }
+    //   ],
+   
+
+    
 },
     {
     timestamps:true
