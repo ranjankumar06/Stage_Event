@@ -63,6 +63,20 @@ module.exports = {
             }
 
         });
+    },
+
+    deleteWishlist: async (req, res) => {
+        const id = req.params.id;
+        wishlist.findByIdAndDelete(id, (err, data) => {
+            if (err) {
+                res.status(400).json(err.message);
+            } else {
+                res.status(200).json({
+                    status:1,
+                    message:"Event Has Been Removed From The WishList"
+                });
+            }
+        });
     }
 }
 
@@ -78,7 +92,7 @@ module.exports = {
 //             foreignField: '_id',
 //             as: 'group1'
 //         }
-//     }, 
+//     },
 //     { $unwind: '$product' },
 //     { $unset: 'productId' },
 //     {
@@ -93,7 +107,7 @@ module.exports = {
 //     });
 // });
 
-// /* 
+// /*
 // {
 //     "userId": "609ab05eabddac700c9e5420",
 //     "productId": "609961b081f2da5ce0a67dcf"
@@ -102,15 +116,6 @@ module.exports = {
 
 
 
-// router.delete('/deleteWishlist/:id', (req, res) => {
-//     const id = req.params.id;
-//     wishlist.findByIdAndDelete(id, (err, data) => {
-//         if (err) {
-//             res.status(400).send(err.message);
-//         } else {
-//             res.status(200).json("Product Has Been Removed From The WishList");
-//         }
-//     });
-// });
+
 
 

@@ -6,5 +6,7 @@ router.get("/getWishlist/:userId",wishlist.wishListGet)
 
 router.post("/addWishlist",wishlist.addWishlist)
 
+router.delete("/deleteWishlist/:id",wishlist.deleteWishlist)
+
 
 module.exports =router
