@@ -362,6 +362,9 @@ router.put("/changePassword",auth.jwtToken,userRouter.changePassword)
 */
 router.get('/listUser',userRouter.listUser);
 
+router.patch('/profileUpdate/:id',userRouter.profileUpdate)
+
+router.get('/eventhistory',userRouter.eventHistory)
 
 
 module.exports =router
