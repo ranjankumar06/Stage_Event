@@ -2,6 +2,8 @@ const eventModel = require('../models/eventModel');
 const userModel = require('../models/userModel');
 const organizerModel = require('../models/organizerModel');
 const commonFunction = require('../helper/commonFunction');
+var paginate = require('mongoose-paginate');
+
 const multer = require('multer');
 
 // const commonDate = require('../helper/date');
@@ -209,7 +211,7 @@ module.exports ={
                 page: parseInt(req.query.page) || 1,
                 limit: parseInt(req.body.limit) || 10,
             };
-            let eventData = await eventModel.aggregatePaginate(options);
+            let eventData = await eventModel.paginate (options);
             if(eventData.docs.length==0){
                 res.send({responseCode:404,responseMessage:'Event data not found!',responseResult:[]})
             }else{

@@ -27,6 +27,7 @@ app.use('/bankdetails',require('./Router/bankdetailsRouter'))
 app.use('/sit',require('./Router/sitRouter'))
 app.use('/eventCategory',require('./Router/eventCategoryRouter'))
 app.use('/wishlist',require('./Router/wishlistRouter'))
+app.use('/newsletter',require('./Router/NewsLetterRouter'))
 
 
 
