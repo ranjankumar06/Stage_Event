@@ -2,7 +2,10 @@ const eventModel = require('../models/eventModel');
 const userModel = require('../models/userModel');
 const organizerModel = require('../models/organizerModel');
 const commonFunction = require('../helper/commonFunction');
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId;
 var paginate = require('mongoose-paginate');
+
 
 const multer = require('multer');
 
@@ -355,7 +358,74 @@ module.exports ={
         console.log(error)
        }
     },
+
+    allDoneEvent:async(req,res)=>{
+        try {
+           let query = { $and: [{ status: { $ne: "DELETE" } }, { userType: 'USER' }], };
+           if(req.query.search){
+               query.$or=[ 
+                   {eventName:{$regex:req.query.search,$option:'i'}},
+                   // {email:{$regex:req.query.search,$option:'i'}},
+               ]
+           }
+           let options = {
+               page: parseInt(req.query.page) || 1,
+               limit: parseInt(req.body.limit) || 10,
+               populate: 'addressId',
+               sort: { createdAt: -1},
+           };
+           let userData = await eventModel.paginate(query,options);
+           if(userData.docs.length==0){
+               res.send({responseCode:404,responseMessage:'Event data not found!',responseResult:[]})
+           }else{
+               res.send({responseCode:200,responseMessage:'Event data found!',responseResult:userData})
+           }
+       } catch (error) {
+       res.send({responseCode:501,responseMessage:'Something went wrong!',responseResult:error.message})
+       }
+   },
  
+
+   UpcomingDetails:async (req, res) => {
+    try {
+        eventModel.aggregate([
+        {
+          $match: { _id: ObjectId(req.query.id) }
+        },
+      ], (err, data) => {
+        if (err) {
+          res.status(400).send(err.message);
+        } else {
+          res.status(200).json({
+            success: true,
+            data: data
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+
+  searchUpcomingByEventStatus:async(req,res)=>{
+    try {
+        let query = { $and: [{event_status:req.body.event_status}, { status: { $ne: "DELETE" } }, { userType: 'USER' }], };
+        let user = await userModel.find(query);
+        if (!user) {
+            return res.send({ reponseCode: 404, responseMessage: 'Upcoming not found .', responseResult: [] });
+        } else {
+            let EventData = await eventModel.find({$and: [{event_status:req.body.event_status}, { status: { $ne: "DELETE" } },],});
+        if(!EventData){
+            res.send({responseCode:404,responseMessage:'Upcoming not found!',responseResult:[]})
+        }else{
+            res.send({responseCode:200,responseMessage:'Upcoming found Successfully',responseResult:EventData,Total:EventData.length})
+        }
+        }
+    } catch (error) {
+        return res.send({ responseCode: 501, responseMessage: "somehting went wrong", responseResult: error.message });
+    }
+},
  
 
 }

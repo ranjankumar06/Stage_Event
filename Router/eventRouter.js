@@ -291,6 +291,10 @@ router.delete('/deleteEvent',eventRouter.deleteEvent)
  *       500:
  *         description: Internal server error.
  */
+ router.get('/UpcomingDetails',eventRouter.UpcomingDetails)
+ router.get('/searchUpcomingByEventStatus',eventRouter.searchUpcomingByEventStatus)
+
+
 router.get('/allUpcomingEvent',eventRouter.allUpcomingEvent)
 router.get('/searchUpcomingByName',eventRouter.searchUpcomingByName)
 router.get('/searchUpcomingByArtistName',eventRouter.searchUpcomingByArtistName)
