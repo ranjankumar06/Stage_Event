@@ -35,7 +35,7 @@ module.exports = {
         wishlist.findOne({
             $and: [
                 { "userId": req.body.userId },
-                { "productId": req.body.productId },
+                { "eventId": req.body.eventId },
             ]
         }, (err, info) => {
             console.log(info);

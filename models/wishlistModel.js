@@ -5,7 +5,7 @@ const objectId = Schema.ObjectId;
 const wishlist = {
     _id: { type: objectId, auto: true },
     userId: { type: objectId, required: true },
-    productId: { type: objectId, required: true },
+    eventId: { type: objectId, required: true },
     status: { type: Boolean, default: 1 },
     createdDate: { type: Date }
 };
