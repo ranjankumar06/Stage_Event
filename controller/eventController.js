@@ -352,7 +352,7 @@ module.exports = {
         try {
             let EventData = await eventModel.findById(req.params.id);
 
-            res.send({ responseCode: 200, responseMessage: 'find result', responseResult: EventData })
+            res.send({ responseCode: 200, responseMessage: 'find result', responseResult: [EventData] })
 
         } catch (error) {
             console.log(error)
@@ -444,7 +444,5 @@ module.exports = {
         } catch (error) {
             return res.send({ responseCode: 501, responseMessage: "somehting went wrong", responseResult: error.message });
         }
-
-
-    }
+    },
 }

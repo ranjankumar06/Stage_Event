@@ -165,6 +165,8 @@ router.put("/resendOTP",userRouter.resendOtp)
 *         description: Internal server error.
 */
 router.post("/login",userRouter.login)
+router.post("/login1",userRouter.login1)
+
 /**
 * @swagger
 * /user/forgotPassword:
