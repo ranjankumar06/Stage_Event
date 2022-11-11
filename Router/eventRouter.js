@@ -292,7 +292,9 @@ router.delete('/deleteEvent',eventRouter.deleteEvent)
  *         description: Internal server error.
  */
  router.get('/UpcomingDetails',eventRouter.UpcomingDetails)
- router.get('/searchUpcomingByEventStatus',eventRouter.searchUpcomingByEventStatus)
+ router.get('/PastEvent',eventRouter.PastEvent)
+ router.get('/UpcomingEvent',eventRouter.UpcomingEvent)
+
 
 
 router.get('/allUpcomingEvent',eventRouter.allUpcomingEvent)
