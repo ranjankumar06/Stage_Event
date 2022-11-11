@@ -1,6 +1,6 @@
 const userModel = require('../models/userModel');
 const addressModel = require('../models/addressModel')
-const eventModel=require('../models/eventModel')
+const eventModel = require('../models/eventModel')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const commonFunction = require('../helper/commonFunction');
@@ -333,15 +333,15 @@ module.exports =
 
     profileUpdate: async (req, res) => {
         try {
-          const _id = req.params.id
-          const update = await userModel.findByIdAndUpdate(_id, req.body)
-          res.send(update)
+            const _id = req.params.id
+            const update = await userModel.findByIdAndUpdate(_id, req.body)
+            res.send(update)
         }
         catch (error) {
-          return res.status(500).json({
-            status: 0,
-            message: "something went wrong",
-          });
+            return res.status(500).json({
+                status: 0,
+                message: "something went wrong",
+            });
         }
     },
 
@@ -349,7 +349,7 @@ module.exports =
         try {
             const userdata = await userModel.findById({ _id: req.query.id })
             if (userdata) {
-                let data1= await eventModel.find({})
+                let data1 = await eventModel.find({})
                 // console.log(data1)
                 return res.status(200).json({
                     status: 1,
@@ -364,8 +364,26 @@ module.exports =
                 message: "something went wrong",
             });
         }
-    }
-    
+    },
+
+
+    login1: async (req, res) => {
+        try {
+            let aa = {
+                email: "ranjan@gmail.com",
+                password: "ranjan@123"
+            }
+            if (aa.password === req.body.password && aa.email === req.body.email) {
+                return res.send({ reponseCode: 200, success: true, responseMessage: 'login Successfully' },);
+            }
+            else {
+                return res.send({ reponseCode: 401, success: false, responseMessage: 'Please check Email or password.' })
+            }
+        } catch (error) {
+            return res.send({ responseCode: 501, responseMessage: "Something went wrong!", responseResult: error.message, });
+        }
+    },
+
 
 }
 
