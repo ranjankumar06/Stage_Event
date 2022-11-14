@@ -349,12 +349,12 @@ module.exports =
         try {
             const userdata = await userModel.findById({ _id: req.query.id })
             if (userdata) {
-                let data1 = await eventModel.find({})
+                let data1 = await eventModel.findOne({})
                 // console.log(data1)
                 return res.status(200).json({
                     status: 1,
                     message: "EventHistory data get successfully",
-                    FinalData: data1
+                    FinalData: [data1]
                 });
             }
         }

@@ -185,7 +185,10 @@ router.post("/OrganizerLogin",organizerRouter.OrganizerLogin)
 *       500:
 *         description: Internal server error.
 */
+
 router.put("/OrganizerForgotPassword",organizerRouter.OrganizerForgotPassword)
+
+
 router.put("/OrgotpVerifyForget",organizerRouter.OrgotpVerifyForget)
 
 /**
