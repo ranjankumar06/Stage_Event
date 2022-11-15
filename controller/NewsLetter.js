@@ -31,7 +31,31 @@ module.exports = {
                 .status(404)
                 .json({ success: false, message: "Oops! Something Went Wrong." });
         }
-    }
+    },
+
+    EmailSearch: async (req, res) => {
+        try {
+            const user = await newsLetter.findOne({ "email": req.query.email });
+            if (user) {
+                res.json({
+                    success: true,
+                    message: 'Newsletter Email find successfully',
+                    data: [user]
+                });
+            }
+            else {
+                res.json({
+                    success: false,
+                    message: 'Newsletter Email not found...',
+                });
+            }
+        } catch (error) {
+            res
+                .status(404)
+                .json({ success: false, message: "Oops! Something Went Wrong." });
+        }
+    },
+
 }
 
 
