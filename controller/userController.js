@@ -346,15 +346,61 @@ module.exports =
     },
 
     eventHistory: async (req, res) => {
+        // try {
+        //     const userdata = await userModel.findById({ _id: req.query.id })
+        //     if (userdata) {
+        //         let data1 = await eventModel.findOne({})
+        //         // console.log(data1)
+        //         return res.status(200).json({
+        //             status: 1,
+        //             message: "EventHistory data get successfully",
+        //             FinalData: [data1]
+        //         });
+        //     }
+        // }
+        // catch (error) {
+        //     return res.status(404).json({
+        //         status: 0,
+        //         message: "something went wrong",
+        //     });
+        // }
+
+
         try {
             const userdata = await userModel.findById({ _id: req.query.id })
+            const array = []
             if (userdata) {
+                const obj = {}
                 let data1 = await eventModel.findOne({})
+                // let data = await order.findOne({});
+                obj._id = data1._id
+                obj.artistName = data1.artistName
+                obj.eventName = data1.eventName
+                obj.startDate = data1.startDate
+                obj.endDate = data1.endDate
+                obj.searchDate = data1.searchDate
+                obj.location = data1.location
+                obj.address = data1.address
+                obj.country = data1.country
+                obj.city = data1.city
+                obj.contractNo = data1.contractNo
+                obj.price = data1.price
+                obj.openingTime = data1.openingTime
+                obj.closingTime = data1.closingTime
+                obj.eventImage = data1.eventImage
+                obj.description = data1.description
+                obj.addressId = data1.addressId
+                obj.status = data1.status
+                obj.event_status = data1.event_status
+                obj.events = data1.events
+                obj.eventCategory = data1.eventCategory
+
                 // console.log(data1)
+                array.push(obj)
                 return res.status(200).json({
                     status: 1,
                     message: "EventHistory data get successfully",
-                    FinalData: [data1]
+                    FinalData: array
                 });
             }
         }
