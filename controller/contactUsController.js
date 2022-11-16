@@ -5,13 +5,13 @@ module.exports =
     addContact:async(req,res)=>{
         try {
             // console.log(req,res);
-            let {  name,email, subject, description, contactNumber } = req.body;
+            let {  name,email, subject, message, contactNumber } = req.body;
             
             let contactUs = await contactUsModel.create({
              name,
              email,
              subject,
-             description,
+             message,
              contactNumber,
             });
             

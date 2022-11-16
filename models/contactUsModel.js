@@ -26,7 +26,7 @@ const contactUsSchema= new Schema({
         // match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
         required: [true, 'User phone number required']
     },
-    description:{
+    message:{
         type:String,
         required:true,
         minlength:[3,'Name cannot be less than 3 char`s'],
