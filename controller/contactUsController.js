@@ -27,6 +27,29 @@ module.exports =
     allContact:async(req,res)=>{
         const AllContacts = await contactUsModel.find({})
         res.status(200).json({AllContacts})
-    }
+    },
+
+    subjectSearch: async (req, res) => {
+        try {
+            const user = await contactUsModel.find({ "subject": req.query.subject });
+            if (user) {
+                res.json({
+                    success: true,
+                    message: 'Subject data find successfully',
+                    AllContacts: user
+                });
+            }
+            else {
+                res.json({
+                    success: false,
+                    message: 'Subject not found...',
+                });
+            }
+        } catch (error) {
+            res
+                .status(404)
+                .json({ success: false, message: "Oops! Something Went Wrong." });
+        }
+    },
     
 }
