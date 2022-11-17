@@ -194,7 +194,7 @@ module.exports =
                                 if(resultVerify.otpExpireTime>=currentTime){
                               let resVerify = await organizerModel.findByIdAndUpdate({_id:resultVerify._id},{$set:{otpVerify: true}},{new:true},)
                                         if (resVerify) {
-                                            return res.send({reponseCode:200,responseMessage:'Organizer verify successfully',result:[]},);
+                                            return res.send({reponseCode:200,responseMessage:'Organizer verify successfully',result:[resVerify]},);
                                         }
                             }else{
                                     res.send({reponseCode:410,responseMessage:'OTP is Expired',result:[]},);

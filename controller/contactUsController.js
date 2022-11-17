@@ -68,7 +68,7 @@ module.exports =
         try {
             const _id = req.params.id
             const update = await contactUsModel.findByIdAndUpdate(_id, req.body)
-            res.send({ responseCode: 200, responseMessage: 'ContectUs update successfully', responseResult: [update] })
+            res.status(200).json({ update })
         }
         catch (error) {
             return res.status(500).json({
