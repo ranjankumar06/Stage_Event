@@ -56,12 +56,27 @@ module.exports =
         try {
             let AllContacts = await contactUsModel.findById(req.params.id);
 
-            res.send({ responseCode: 200, responseMessage: 'find result', responseResult: [AllContacts] })
+            res.send({ responseCode: 200, responseMessage: 'ContectUs data getbyid successfully', responseResult: [AllContacts] })
 
         } catch (error) {
             console.log(error)
         }
     },
+
+    UpdateContect: async (req, res) => {
+        try {
+            const _id = req.params.id
+            const update = await contactUsModel.findByIdAndUpdate(_id, req.body)
+            res.send({ responseCode: 200, responseMessage: 'ContectUs update successfully', responseResult: [update] })
+        }
+        catch (error) {
+            return res.status(500).json({
+                status: 0,
+                message: "something went wrong",
+            });
+        }
+    },
+
 
     
 }
