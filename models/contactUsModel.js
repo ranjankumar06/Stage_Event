@@ -32,10 +32,9 @@ const contactUsSchema= new Schema({
         minlength:[3,'Name cannot be less than 3 char`s'],
         maxlength: [100, "Name can not be more than 100 characters"],
     },
-    // addressId:{
-    //     type:Schema.Types.ObjectId,
-    //     ref:'address'
-    //   },     
+    remark:{
+        type:String
+      },     
     // status:{
     //     type:String,
     //     enum:["ACTION","BLOCK","DELETE"],

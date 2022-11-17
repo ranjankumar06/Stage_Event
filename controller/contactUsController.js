@@ -51,5 +51,17 @@ module.exports =
                 .json({ success: false, message: "Oops! Something Went Wrong." });
         }
     },
+
+    getContectById: async (req, res) => {
+        try {
+            let AllContacts = await contactUsModel.findById(req.params.id);
+
+            res.send({ responseCode: 200, responseMessage: 'find result', responseResult: [AllContacts] })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
     
 }
