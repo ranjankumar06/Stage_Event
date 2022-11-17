@@ -4,6 +4,7 @@ router.post("/addContact",contactUsRouter.addContact)
 router.get("/allContact",contactUsRouter.allContact)
 router.get("/subjectSearch",contactUsRouter.subjectSearch)
 router.get('/getContectById/:id',contactUsRouter.getContectById)
+router.patch('/UpdateContect/:id',contactUsRouter.UpdateContect)
 
 
 
