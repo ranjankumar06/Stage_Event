@@ -224,28 +224,28 @@ module.exports = {
             return res.send({ reponseCode: 501, responseMessage: 'Something went worng', result: error.message })
         }
     },
-    deleteEvent: async (req, res) => {
-        try {
-            let query = { $and: [{ eventName: req.body.eventName }, { status: { $ne: "DELETE" } }, { userType: { $ne: "USER" } },] };
-            let data = await organizerModel.findOne(query)
-            if (!data) {
-                return res.send({ reponseCode: 404, responseMessage: 'you are not admin or user', result: [] })
-            } else {
-                let query = { $and: [{ eventName: req.body.eventName }, { status: { $ne: "DELETE" } },], };
-                let dEvent = await eventModel.findOne(query);
-                if (!dEvent) {
-                    return res.send({ responseCode: 404, responseMessage: 'Event not found!', responseResult: [] })
-                } else {
-                    let updateEvent = await eventModel.findByIdAndUpdate({ _id: dEvent._id }, { $set: { status: "DELETE" } }, { new: true })
-                    if (updateEvent) {
-                        return res.send({ responseCode: 200, responseMessage: 'Event delete successfully', responseResult: [] })
-                    }
-                }
-            }
-        } catch (error) {
-            return res.send({ responseCode: 501, responseMessage: "somehting went wrong", responseResult: error.message });
-        }
-    },
+    // deleteEvent: async (req, res) => {
+    //     try {
+    //         let query = { $and: [{ eventName: req.body.eventName }, { status: { $ne: "DELETE" } }, { userType: { $ne: "USER" } },] };
+    //         let data = await organizerModel.findOne(query)
+    //         if (!data) {
+    //             return res.send({ reponseCode: 404, responseMessage: 'you are not admin or user', result: [] })
+    //         } else {
+    //             let query = { $and: [{ eventName: req.body.eventName }, { status: { $ne: "DELETE" } },], };
+    //             let dEvent = await eventModel.findOne(query);
+    //             if (!dEvent) {
+    //                 return res.send({ responseCode: 404, responseMessage: 'Event not found!', responseResult: [] })
+    //             } else {
+    //                 let updateEvent = await eventModel.findByIdAndUpdate({ _id: dEvent._id }, { $set: { status: "DELETE" } }, { new: true })
+    //                 if (updateEvent) {
+    //                     return res.send({ responseCode: 200, responseMessage: 'Event delete successfully', responseResult: [] })
+    //                 }
+    //             }
+    //         }
+    //     } catch (error) {
+    //         return res.send({ responseCode: 501, responseMessage: "somehting went wrong", responseResult: error.message });
+    //     }
+    // },
     allUpcomingEvent: async (req, res) => {
         try {
             let query = { $and: [{ status: { $ne: "DELETE" } }, { userType: 'USER' }], };
@@ -445,4 +445,22 @@ module.exports = {
             return res.send({ responseCode: 501, responseMessage: "somehting went wrong", responseResult: error.message });
         }
     },
+
+    deleteEvent: async (req, res) => {
+        try {
+            const _id = req.query._id;
+            eventModel.findByIdAndDelete(_id, (err, data) => {
+                if (err) {
+                    res.status(400).send(err.message);
+                } else {
+                    res.status(200).json("Event Has Been Removed From The List");
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
 }
+
+
