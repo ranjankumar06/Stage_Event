@@ -53,11 +53,11 @@ const eventSchema = new Schema({
 		required: true
 
     },
-    price:{
-        type: Number,
-		required: true
+    // price:{
+    //     type: Number,
+	// 	required: true
 
-    },
+    // },
     openingTime:{
         type:String,
 		required: true

@@ -3,12 +3,6 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs')
 const mongoosePaginate = require('mongoose-paginate')
 const organizerSchema = new Schema({
-  firstName: {
-    type: String
-  },
-  lastName: {
-    type: String
-  },
   mobileNumber: {
     type: String
   },
@@ -21,13 +15,7 @@ const organizerSchema = new Schema({
   password: {
     type: String
   },
-  address: {
-    type: String,
-  },
   country: {
-    type: String,
-  },
-  city: {
     type: String,
   },
   searchDate: {
@@ -79,7 +67,7 @@ const organizerSchema = new Schema({
   },
   EmailForEbilling: {
     type: [String],
-  }, 
+  },
   Bankdetails: {
     type: String
   },
