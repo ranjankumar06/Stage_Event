@@ -124,7 +124,7 @@ module.exports = {
             return res.send({ responseCode: 501, responseMessage: "somehting went wrong", responseResult: error.message });
         }
     },
-    updateEvent: async (req, res) => {
+    EventUpdate: async (req, res) => {
         // try {
         //     let query= { $and: [{ _id:req.dataId}, { status: { $ne: "DELETE" } }, { userType:{$ne:"USER"}}, ]};
         //     let data=await organizerModel.findOne(query)
@@ -459,8 +459,27 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
-    }
-    
+    },
+
+    updateEvent: async (req, res) => {
+        try {
+            const _id = req.params.id
+            let image = [];
+                for (let index = 0; index < req.files.length; index++) {
+                    let f = await commonFunction.uploadImage(req.files[index].path);
+                    image.push(f);
+                }
+            const update = await eventModel.findByIdAndUpdate(_id, req.body)
+            return res.send({ reponseCode: 200, responseMessage: 'Event Update sucessfully', result: [update] })
+        }
+        catch (error) {
+            return res.status(500).json({
+                status: 0,
+                message: "something went wrong",
+            });
+        }
+    },
+
 }
 
 

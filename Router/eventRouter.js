@@ -1,7 +1,8 @@
 const router =  require('express').Router();
 const eventRouter = require('../controller/eventController')
 const auth = require('../middleware/auth')
-const multer = require('multer')
+const multer = require('multer');
+const { Router } = require('express');
 var storage = multer.diskStorage({
     // destination: function (req, file, cb) {
     //   cb(null, 'uploads')
@@ -223,7 +224,8 @@ router.get('/eventView',auth.jwtToken,eventRouter.eventView)
 *       500:
 *         description: Internal server error.
 */
-router.put('/updateEvent',upload.array('image',15),eventRouter.updateEvent)
+router.patch('/updateEvent/:id',upload.array('image',15),eventRouter.updateEvent)
+router.put('/EventUpdate',upload.array('image',15),eventRouter.EventUpdate)
 /**
 * @swagger
 * /event/EventList:
@@ -519,6 +521,9 @@ router.get('/geteventById/:id',eventRouter.geteventById)
 
 // router.get('/concartEvent/:_id',eventRouter.concartEvent)
 // router.get('/sportEvent/:_id',eventRouter.sportEvent)
+
+router.patch('/EventUpdate/:id',eventRouter.EventUpdate)
+
 
 
 
