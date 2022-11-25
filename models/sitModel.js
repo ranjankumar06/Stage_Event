@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// const bcrypt = require('bcryptjs')
+const objectId = Schema.ObjectId;
 const mongoosePaginate = require('mongoose-paginate')
-const sitSchema= new Schema({
+const sitSchema= {
     sitNumber:{
         type:String,
         // trim: true,
@@ -118,18 +118,31 @@ const sitSchema= new Schema({
         enum:["EMPTY","BOOKED","PENDING"],
         default:"EMPTY"
     },
+    eventId: { type: objectId, required: true },
+    userId: { type: objectId, required: true },
+
+
     eventCategory:{
         type:String,
         enum:["CHURCH","THEATRE","STANDING","STADIUM"],
         default:"THEATRE"
      }
-},
-{ timestamps: true }
-);
-
-sitSchema.plugin(mongoosePaginate) 
-const sitModel = mongoose.model('sit',sitSchema);
-module.exports = sitModel
+}
+// { timestamps: true }
 
 
-   
+const wishlistSchema = new Schema(sitSchema, { versionKey: false });
+
+wishlistSchema.pre('save', function (next) {
+    const currentDate = new Date();
+    if (!this.createdDate) {
+        this.createdDate = currentDate;
+    }
+    next();
+});
+
+module.exports = mongoose.model("sit", wishlistSchema);
+
+// sitSchema.plugin(mongoosePaginate) 
+// const sitModel = mongoose.model('sit',sitSchema);
+// module.exports = sitModel
