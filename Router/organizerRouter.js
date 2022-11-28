@@ -386,4 +386,7 @@ router.put("/OrganizerChangePassword",organizerRouter.OrganizerChangePassword)
 *         description: Internal server error.
 */
 router.get('/listOrganizer',organizerRouter.listOrganizer);
+
+router.get("/AllListOrganizer",organizerRouter.AllListOrganizer)
+
 module.exports =router
