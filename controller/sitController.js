@@ -8,16 +8,16 @@ module.exports =
     addSit:async(req,res)=>{
         try {
             // console.log(req,res);
-            let {  sitName, totalSit,totalPrice, sitNumber,
-                sitLocation,totalSitSilver,totalSitGold,totalSitBronze,
-                totalSitVip, goldPrice,silverPrice,bronzePrice,vipPrice,eventId } = req.body;
+            let {  sitName, totalSeat,totalPrice, sitNumber,eventCategory,
+                seatLocation,silverSeat,goldSeat,bronzeSeat,
+                vipSeat, goldSeatPrice,silverSeatPrice,bronzeSeatPrice,vipSeatPrice,eventId,seatType,seatStatus } = req.body;
             
             let contactUs = await sitModel.create({
             sitName,
-             totalSit,
-             sitNumber,totalPrice,
-             sitLocation,totalSitSilver,totalSitGold,totalSitBronze,totalSitVip,
-             goldPrice,silverPrice,bronzePrice,vipPrice,eventId
+             totalSeat,
+             sitNumber,totalPrice,eventCategory,
+             seatLocation,silverSeat,goldSeat,bronzeSeat,vipSeat,
+             goldSeatPrice,silverSeatPrice,bronzeSeatPrice,vipSeatPrice,eventId,seatType,seatStatus
             });
             
        res.status(200).json( contactUs );
@@ -90,5 +90,16 @@ module.exports =
             }
 
         });
+    },
+
+    geteventById1: async (req, res) => {
+        try {
+            let EventData = await sitModel.find(req.quary.eventId);
+
+            res.send({ responseCode: 200, responseMessage: 'find result', responseResult: [EventData] })
+
+        } catch (error) {
+            console.log(error)
+        }
     },
 }

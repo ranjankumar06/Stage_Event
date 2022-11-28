@@ -105,7 +105,7 @@ const upload = multer({storage:storage})
 *       500:
 *         description: Internal server error.
 */
-router.post('/addEvent',upload.array('image',15),eventRouter.addEvent)
+router.post('/addEvent',upload.array('image','eventBanner','eventDocument',15),eventRouter.addEvent)
 /**
 * @swagger
 * /event/eventView:

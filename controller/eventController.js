@@ -72,11 +72,29 @@ module.exports = {
                     return res.send({ reponseCode: 409, responseMessage: 'Event already exists', result: [] })
                 } else {
                     let image = [];
+                    let eventBanner = [];
+                    let eventDocument = [];
+
                     for (let index = 0; index < req.files.length; index++) {
                         let f = await commonFunction.uploadImage(req.files[index].path);
                         image.push(f);
                     }
                     req.body.eventImage = image
+
+
+                    for (let index = 0; index < req.files.length; index++) {
+                        let g = await commonFunction.eventDocument(req.files[index].path);
+                        eventDocument.push(g);
+                    }
+                    req.body.eventDocument = eventDocument
+
+
+                    for (let index2 = 0; index2 < req.files.length; index2++) {
+                        let h = await commonFunction.eventBanner(req.files[index2].path);
+                        eventBanner.push(h);
+
+                        req.body.eventBanner = eventBanner
+                    }
                     let stime = new Date()
                     // stime.setHours(08)+stime.setMinutes(00)+stime.setSeconds(00)
                     let startTime = stime.toLocaleTimeString()
@@ -465,10 +483,10 @@ module.exports = {
         try {
             const _id = req.params.id
             let image = [];
-                for (let index = 0; index < req.files.length; index++) {
-                    let f = await commonFunction.uploadImage(req.files[index].path);
-                    image.push(f);
-                }
+            for (let index = 0; index < req.files.length; index++) {
+                let f = await commonFunction.uploadImage(req.files[index].path);
+                image.push(f);
+            }
             const update = await eventModel.findByIdAndUpdate(_id, req.body)
             return res.send({ reponseCode: 200, responseMessage: 'Event Update sucessfully', result: [update] })
         }

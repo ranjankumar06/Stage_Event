@@ -59,18 +59,24 @@ const eventSchema = new Schema({
 
     // },
     openingTime:{
-        type:String,
+        type:[String],
 		required: true
 
     },
     closingTime:{
-        type:String,
+        type:[String],
 		required: true
 
     },
     eventImage:{
         type:[String]
       },
+    eventDocument:{
+        type:[String]
+      },
+    eventBanner:{
+        type:[String]
+      },  
     description:{
         type:String
     },

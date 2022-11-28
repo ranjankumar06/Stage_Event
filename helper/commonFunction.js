@@ -110,6 +110,22 @@ module.exports = {
             return res.send({ responseCode: 501, responseMessage: "Something went wrong !", responseResult: error.message });
         }
     },
+    eventDocument: async (eventDocument) => {
+        try {
+            let upload = await cloudinary.uploader.upload(eventDocument);
+            return upload.secure_url;
+        } catch (error) {
+            return res.send({ responseCode: 501, responseMessage: "Something went wrong !", responseResult: error.message });
+        }
+    },
+    eventBanner: async (eventBanner) => {
+        try {
+            let upload = await cloudinary.uploader.upload(eventBanner);
+            return upload.secure_url;
+        } catch (error) {
+            return res.send({ responseCode: 501, responseMessage: "Something went wrong !", responseResult: error.message });
+        }
+    },
     generatedSNo(count){
         var str =""+count
         var pad ="00001" 
