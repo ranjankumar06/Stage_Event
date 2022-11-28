@@ -96,6 +96,11 @@ const eventSchema = new Schema({
         required: false,
         default:"Upcomming"
     },
+    postalCode:{
+        type:String,
+        required: false,
+
+    },
     events:{
        type:String,
        enum:['WEEKDAY','WEEKEND'],
