@@ -353,7 +353,7 @@ module.exports =
             if(userData.docs.length==0){
                 res.send({responseCode:404,responseMessage:'Organizer not found!',responseResult:[]})
             }else{
-                res.send({responseCode:200,responseMessage:'Organizer found!',responseResult:userData})
+                res.send({responseCode:200,responseMessage:'Organizer found successfully!',responseResult:userData})
             }
         } catch (error) {
         res.send({responseCode:501,responseMessage:'Something went wrong!',responseResult:error.message})
