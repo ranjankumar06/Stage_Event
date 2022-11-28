@@ -359,7 +359,10 @@ module.exports =
         res.send({responseCode:501,responseMessage:'Something went wrong!',responseResult:error.message})
         }
     },
-
+    AllListOrganizer:async(req,res)=>{
+        const AllListOrganizer = await organizerModel.find({})
+        res.status(200).json({AllListOrganizer})
+    },
   
 }
 
