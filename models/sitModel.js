@@ -21,19 +21,19 @@ const sitSchema= {
     //     // match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
     //     required: [true, 'User phone number required']
     // },
-    totalSit:{
+    totalSeat:{
         type:String,
         required:true,
         // minlength:[3,'Name cannot be less than 3 char`s'],
         // maxlength: [100, "Name can not be more than 100 characters"],
     },
-    totalSitSilver:{
+    silverSeat:{
         type:String,
         // required:true,
         // minlength:[3,'Name cannot be less than 3 char`s'],
         // maxlength: [100, "Name can not be more than 100 characters"],
     },
-    totalSitGold:{
+    goldSeat:{
         type:String,
         // required:true,
         // minlength:[3,'Name cannot be less than 3 char`s'],
@@ -45,43 +45,43 @@ const sitSchema= {
         // minlength:[3,'Name cannot be less than 3 char`s'],
         // maxlength: [100, "Name can not be more than 100 characters"],
     },
-    goldPrice:{
+    goldSeatPrice:{
         type:String,
         // required:true,
         // minlength:[3,'Name cannot be less than 3 char`s'],
         // maxlength: [100, "Name can not be more than 100 characters"],
     },
-    silverPrice:{
+    silverSeatPrice:{
         type:String,
         // required:true,
         // minlength:[3,'Name cannot be less than 3 char`s'],
         // maxlength: [100, "Name can not be more than 100 characters"],
     },
-    bronzePrice:{
+    bronzeSeatPrice:{
         type:String,
         // required:true,
         // minlength:[3,'Name cannot be less than 3 char`s'],
         // maxlength: [100, "Name can not be more than 100 characters"],
     },
-    vipPrice:{
+    vipSeatPrice:{
         type:String,
         // required:true,
         // minlength:[3,'Name cannot be less than 3 char`s'],
         // maxlength: [100, "Name can not be more than 100 characters"],
     },
-    totalSitBronze:{
+    bronzeSeat:{
         type:String,
         // required:true,
         // minlength:[3,'Name cannot be less than 3 char`s'],
         // maxlength: [100, "Name can not be more than 100 characters"],
     },
-    totalSitVip:{
+    vipSeat:{
         type:String,
         // required:true,
         // minlength:[3,'Name cannot be less than 3 char`s'],
         // maxlength: [100, "Name can not be more than 100 characters"],
     },
-    sitLocation: {
+    seatLocation: {
         type: {
             type: String,
             default: "Point"
@@ -108,12 +108,12 @@ const sitSchema= {
         enum:["USER","ORGANIZER"],
         default:"USER"
     },
-    sitType:{
+    seatType:{
         type:String,
         enum:["GOLD","VIP","BRONZE","SILVER"],
         default:"GOLD"
     },
-    sitStatus:{
+    seatStatus:{
         type:String,
         enum:["EMPTY","BOOKED","PENDING"],
         default:"EMPTY"
