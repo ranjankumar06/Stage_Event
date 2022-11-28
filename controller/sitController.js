@@ -92,14 +92,26 @@ module.exports =
         });
     },
 
-    geteventById1: async (req, res) => {
-        try {
-            let EventData = await sitModel.find(req.quary.eventId);
-
-            res.send({ responseCode: 200, responseMessage: 'find result', responseResult: [EventData] })
-
-        } catch (error) {
-            console.log(error)
-        }
+    wishListGet: async (req, res) => {
+        const eventId = req.params.eventId;
+        sitModel.aggregate([{
+            $lookup: {
+                from: 'events',
+                localField: 'eventId',
+                foreignField: '_id',
+                as: 'event'
+            }
+        },
+        { $unwind: '$event' },
+        { $unset: 'eventId' },
+        {
+            $match: {
+                eventId: ObjectId(eventId)
+            }
+        }]).then(data => {
+            res.status(200).json({ success: true, msg: "All event in your wishlisty", data: data });
+        }).catch(err => {
+            res.status(400).json(err);
+        });
     },
 }

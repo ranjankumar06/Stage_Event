@@ -339,7 +339,7 @@ module.exports =
             let query = { $and: [{ status: { $ne: "DELETE" } }, { userType: 'ORGANIZER' }], };
             if(req.query.search){
                 query.$or=[ 
-                    {name:{$regex:req.query.search,$option:'i'}},
+                    {ContactPerson:{$regex:req.query.search,$option:'i'}},
                     {email:{$regex:req.query.search,$option:'i'}},
                 ]
             }
@@ -350,10 +350,11 @@ module.exports =
                 sort: { createdAt: -1},
             };
             let userData = await organizerModel.paginate(query,options);
+            let filterUserdata=userData.docs
             if(userData.docs.length==0){
                 res.send({responseCode:404,responseMessage:'Organizer not found!',responseResult:[]})
             }else{
-                res.send({responseCode:200,responseMessage:'Organizer found successfully!',responseResult:userData})
+                res.send({responseCode:200,responseMessage:'Organizer found successfully!',responseResult:filterUserdata})
             }
         } catch (error) {
         res.send({responseCode:501,responseMessage:'Something went wrong!',responseResult:error.message})
@@ -361,7 +362,9 @@ module.exports =
     },
     AllListOrganizer:async(req,res)=>{
         const AllListOrganizer = await organizerModel.find({})
-        res.status(200).json({AllListOrganizer})
+        res.send({ responseCode: 200, responseMessage: 'AllListOrganizer found Successfully', responseResult: AllListOrganizer, Total: AllListOrganizer.length })
+
+        // res.status(200).json({AllListOrganizer})
     },
   
 }
