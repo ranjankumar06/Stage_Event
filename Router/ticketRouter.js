@@ -54,7 +54,9 @@ const upload = multer({storage:storage})
 *       500:
 *         description: Internal server error.
 */
-router.post("/ticketBook",upload.array('image'),auth.jwtToken,ticketRouter.ticketBook)
+// router.post("/ticketBook",upload.array('image'),auth.jwtToken,ticketRouter.ticketBook)
+router.post("/ticketBook",upload.array('image'),ticketRouter.ticketBook)
+
 /**
 * @swagger
 * /ticket/ticketApprove:

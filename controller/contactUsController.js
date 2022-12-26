@@ -5,7 +5,7 @@ module.exports =
     addContact: async (req, res) => {
         try {
             // console.log(req,res);
-            let { name, email, subject, message, contactNumber, remark } = req.body;
+            let { name, email, subject, message, contactNumber, remark,EventId,UserId,userType,status } = req.body;
 
             let contactUs = await contactUsModel.create({
                 name,
@@ -13,7 +13,11 @@ module.exports =
                 subject,
                 message,
                 contactNumber,
-                remark
+                remark,
+                UserId,
+                EventId,
+                status,
+                userType
             });
 
             res.status(200).json({ success: true, message: 'contact save succesfully', contactUs });
