@@ -7,16 +7,18 @@ module.exports =
 {
     bookseat: async (req, res) => {
         try {
-            let { userId, eventName, email, status, ticket_status, userType, 
-                 singleSeatPrice, seatType,totalseat } = req.body;
-                let pricecalcuate=totalseat*singleSeatPrice
+            let { userId, eventName, email, status, ticket_status, userType,
+                singleSeatPrice, seatType, totalseat } = req.body;
+
+            let pricecalcuate = totalseat * singleSeatPrice
+
             let contactUs = await booking.create({
                 userId, eventName, email, status, ticket_status, userType,
-                 totalSeatPrice:pricecalcuate, singleSeatPrice, seatType,totalseat
+                totalSeatPrice: pricecalcuate, singleSeatPrice, seatType, totalseat
             });
 
             // res.status(200).json(contactUs);
-            return res.send({reponseCode:200,responseMessage:'Messege send',result:contactUs})                          
+            return res.send({ reponseCode: 200, responseMessage: 'Messege send', result: contactUs })
 
 
         } catch (error) {
@@ -24,18 +26,18 @@ module.exports =
             res.status(501).json({ success: false, message: "Something went wrong" })
         }
     },
-    getseat:async(req,res)=>{
+    getseat: async (req, res) => {
         const id = req.params._id;
         const AllContacts = await booking.findOne(id)
-        res.status(200).json({AllContacts:[AllContacts]})
+        res.status(200).json({ AllContacts: [AllContacts] })
     },
-    getAllseat:async(req,res)=>{
+    getAllseat: async (req, res) => {
         const AllContacts = await booking.find({})
-        res.status(200).json({AllContacts})
+        res.status(200).json({ AllContacts })
     },
 
     // wishListGet: async (req, res) => {
-        // const userId = req.params.userId;
+    // const userId = req.params.userId;
     //     booking.aggregate([{
     //         $lookup: {
     //             from: 'events',
