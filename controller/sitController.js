@@ -22,10 +22,9 @@ module.exports =
             let CreateSeat = await seattModel.create({
                 eventCategory, holdSeat,
                 silverSeat, goldSeat, bronzeSeat, vipSeat,
-                goldSeatPrice, silverSeatPrice, bronzeSeatPrice, vipSeatPrice, eventId, userId
-
+                goldSeatPrice, silverSeatPrice, bronzeSeatPrice,
+                vipSeatPrice, eventId, userId
             });
-
             res.status(200).json({ success: true, message: 'CreateSeat save succesfully', CreateSeat });
 
 
@@ -35,7 +34,7 @@ module.exports =
         }
     },
     allSitDetails: async (req, res) => {
-        const AllContacts = await sitModel.find({})
+        const AllContacts = await seattModel.find({})
         res.status(200).json({ AllContacts })
     },
 
