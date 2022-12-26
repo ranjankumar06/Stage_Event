@@ -92,7 +92,6 @@ module.exports = {
                     for (let index2 = 0; index2 < req.files.length; index2++) {
                         let h = await commonFunction.eventBanner(req.files[index2].path);
                         eventBanner.push(h);
-
                         req.body.eventBanner = eventBanner
                     }
                     let stime = new Date()

@@ -1,148 +1,55 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const objectId = Schema.ObjectId;
 const mongoosePaginate = require('mongoose-paginate')
-const sitSchema= {
-    sitNumber:{
-        type:String,
-        // trim: true,
-        required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+const sitSchema =new Schema({
+    silverSeat: {
+        type: String,
     },
-   
-    sitName:{
-        type:String,
-        required:true,
-        // minlength:3,
+    goldSeat: {
+        type: String,
     },
-    // contactNumber:{
-    //     type:String,
-    //     // match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
-    //     required: [true, 'User phone number required']
-    // },
-    totalSeat:{
-        type:String,
-        required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    totalPrice: {
+        type: String,
     },
-    silverSeat:{
-        type:String,
-        // required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    goldSeatPrice: {
+        type: String,
     },
-    goldSeat:{
-        type:String,
-        // required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    silverSeatPrice: {
+        type: String,
     },
-    totalPrice:{
-        type:String,
-        // required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    bronzeSeatPrice: {
+        type: String,
     },
-    goldSeatPrice:{
-        type:String,
-        // required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    vipSeatPrice: {
+        type: String,
     },
-    silverSeatPrice:{
-        type:String,
-        // required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    bronzeSeat: {
+        type: String,
     },
-    bronzeSeatPrice:{
-        type:String,
-        // required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    vipSeat: {
+        type: String,
     },
-    vipSeatPrice:{
-        type:String,
-        // required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    holdSeat: {
+        type: String,
     },
-    bronzeSeat:{
-        type:String,
-        // required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    userType: {
+        type: String,
+        enum: ["USER", "ORGANIZER"],
+        default: "USER"
     },
-    vipSeat:{
-        type:String,
-        // required:true,
-        // minlength:[3,'Name cannot be less than 3 char`s'],
-        // maxlength: [100, "Name can not be more than 100 characters"],
+    eventId: { type: String, required: true},
+    userId: { type: String, required: true },
+    eventCategory: {
+        type: String,
+        enum: ["CHURCH", "THEATRE", "STANDING", "STADIUM"],
+        default: "THEATRE"
     },
-    seatLocation: {
-        type: {
-            type: String,
-            default: "Point"
-        },
-        coordinates: {
-            type: [Number],
-            default: [0, 0]
-        }
-    },
-    qrImg:{
-        type:String,
-      },
-    addressId:{
-        type:Schema.Types.ObjectId,
-        ref:'address'
-      },     
-    status:{
-        type:String,
-        enum:["ACTION","BLOCK","DELETE"],
-        default:"ACTION"
-    },
-    userType:{
-        type:String,
-        enum:["USER","ORGANIZER"],
-        default:"USER"
-    },
-    seatType:{
-        type:String,
-        enum:["GOLD","VIP","BRONZE","SILVER"],
-        default:"GOLD"
-    },
-    seatStatus:{
-        type:String,
-        enum:["EMPTY","BOOKED","PENDING"],
-        default:"EMPTY"
-    },
-    eventId: { type: objectId, required: true },
-    userId: { type: objectId, required: true },
+},
+{ timestamps: true },
+
+)
 
 
-    eventCategory:{
-        type:String,
-        enum:["CHURCH","THEATRE","STANDING","STADIUM"],
-        default:"THEATRE"
-     }
-}
-// { timestamps: true }
-
-
-const wishlistSchema = new Schema(sitSchema, { versionKey: false });
-
-wishlistSchema.pre('save', function (next) {
-    const currentDate = new Date();
-    if (!this.createdDate) {
-        this.createdDate = currentDate;
-    }
-    next();
-});
-
-module.exports = mongoose.model("sit", wishlistSchema);
-
-// sitSchema.plugin(mongoosePaginate) 
-// const sitModel = mongoose.model('sit',sitSchema);
-// module.exports = sitModel
+sitSchema.plugin(mongoosePaginate) 
+const sitModel = mongoose.model('sit',sitSchema);
+module.exports = sitModel

@@ -22,6 +22,7 @@ module.exports = {
                 let machineResult = await eventModel.findOne(query);
                 if (!machineResult) {
                     let counter = req.body.counter
+                    console.log(req.body.counter)
                     if (counter > 4) {
                         return res.send({ reponseCode: 400, responseMessage: 'counter limit exceed', result: [] })
                     }

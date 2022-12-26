@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// const bcrypt = require('bcryptjs')
 const mongoosePaginate = require('mongoose-paginate')
 const contactUsSchema= new Schema({
     name:{
@@ -34,17 +33,19 @@ const contactUsSchema= new Schema({
     },
     remark:{
         type:String
-      },     
-    // status:{
-    //     type:String,
-    //     enum:["ACTION","BLOCK","DELETE"],
-    //     default:"ACTION"
-    // },
-    // userType:{
-    //     type:String,
-    //     enum:["USER","ORGANIZER"],
-    //     default:"USER"
-    // }
+      },
+    EventId: { type: String, required: true },
+    UserId: { type: String, required: true },     
+    status:{
+        type:String,
+        enum:["ACTION","BLOCK","DELETE"],
+        default:"ACTION"
+    },
+    userType:{
+        type:String,
+        enum:["USER","ORGANIZER"],
+        default:"USER"
+    }
 },
 { timestamps: true }
 );
