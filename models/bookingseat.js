@@ -11,6 +11,18 @@ const bookingseat = new Schema({
     eventName: {
         type: String
     },
+    holdSeat: {
+        type: String
+    },
+    Remaning:{
+        type: String
+    },
+    Ablibaleseat:{
+        type: String
+    },
+    seatoutforEvent:{
+        type: String
+    },
     email: {
         type: String
     },
@@ -34,7 +46,7 @@ const bookingseat = new Schema({
         required: true
 
     },
-    totalseat:{type: Number,
+    soldSeat:{type: Number,
         required: true},
 
     singleSeatPrice: {
