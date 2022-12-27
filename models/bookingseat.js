@@ -17,7 +17,7 @@ const bookingseat = new Schema({
     Remaning:{
         type: String
     },
-    Ablibaleseat:{
+    available:{
         type: String
     },
     seatoutforEvent:{

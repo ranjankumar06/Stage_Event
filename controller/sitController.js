@@ -37,6 +37,19 @@ module.exports =
         const AllContacts = await seattModel.find({})
         res.status(200).json({ AllContacts })
     },
+    seatUpdate: async (req, res) => {
+        try {
+            const _id = req.params.id
+            const update = await seattModel.findByIdAndUpdate(_id, req.body)
+            res.send(update)
+        }
+        catch (error) {
+            return res.status(500).json({
+                status: 0,
+                message: "something went wrong",
+            });
+        }
+    },
 
     
 }
