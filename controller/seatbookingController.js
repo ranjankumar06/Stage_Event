@@ -44,12 +44,10 @@ module.exports =
                 userId, eventName, email, status, ticket_status, userType,
                 totalSeatPrice: pricecalcuate, singleSeatPrice: SingleSeatPrice,
                 Remaning: remaningseat, seatType, soldSeat,
-                holdSeat, Ablibaleseat: ablivaleSeat, seatoutforEvent: seatoutforevent
+                holdSeat, available: ablivaleSeat, seatoutforEvent: seatoutforevent
             });
-
             // res.status(200).json(contactUs);
             return res.send({ reponseCode: 200, responseMessage: 'Messege send', result: contactUs })
-
 
         } catch (error) {
             console.log(error);
@@ -61,7 +59,7 @@ module.exports =
         const AllContacts = await booking.findOne(id)
         res.status(200).json({ AllContacts: [AllContacts] })
     },
-    getAllseat: async (req, res) => {
+    getAllseat: async (req, res) => { 
         const AllContacts = await booking.find({})
         res.status(200).json({ AllContacts })
     },
