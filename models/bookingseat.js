@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const mongoosePaginate = require('mongoose-paginate')
+// const mongoosePaginate = require('mongoose-paginate')
 const Schema = mongoose.Schema
 
 const bookingseat = new Schema({
@@ -14,45 +14,59 @@ const bookingseat = new Schema({
     holdSeat: {
         type: String
     },
-    Remaning:{
+    Remaning: {
         type: String
     },
-    available:{
+    available: {
         type: String
     },
-    seatoutforEvent:{
+    eventgoldSeat: {
         type: String
     },
-    email: {
+    eventSilverSeat: {
+        type: String
+    },
+    eventBronzSeat: {
+        type: String
+    },
+    eventVipSeat: {
+        type: String
+    },
+
+    // email: {
+    //     type: String
+    // },
+    totalSeatType: {
         type: String
     },
     // counter: {
     //     type: String,
     // },
-    status: {
-        type: String,
-        enum: ["ACTIVE", "BLOCK", "DELETE"],
-        default: "ACTIVE"
-    },
-    ticket_status: {
-        type: String,
-        enum: ["SHOW", "BOOK", "BUY"],
-        // required:true,
-        default: "BOOK"
+    // status: {
+    //     type: String,
+    //     enum: ["ACTIVE", "BLOCK", "DELETE"],
+    //     default: "ACTIVE"
+    // },
+    // ticket_status: {
+    //     type: String,
+    //     enum: ["SHOW", "BOOK", "BUY"],
+    //     // required:true,
+    //     default: "BOOK"
 
-    },
-    totalSeatPrice: {
-        type: Number,
-        required: true
+    // },
+    // totalSeatPrice: {
+    //     type: Number,
+    //     required: true
 
-    },
-    soldSeat:{type: Number,
-        required: true},
+    // },
+    // soldSeat: {
+    //     type: Number,
+    //     required: true
+    // },
 
     singleSeatPrice: {
         type: Number,
         required: true
-
     },
     seatType: {
         type: String,
@@ -62,14 +76,36 @@ const bookingseat = new Schema({
     },
     userType: {
         type: String,
-        enum: ["USER", "ORGANIZER", "ADMIN"],
-        default: "USER"
+        enum: ["ADMIN"],
+        default: "ADMIN"
     }
 },
     {
         timestamps: true
     })
 
-bookingseat.plugin(mongoosePaginate)
-let bookingseatModel = mongoose.model("bookingseat", bookingseat);
-module.exports = bookingseatModel
+
+
+const UserBookseat = {
+    userId: { type: String },
+    eventName: { type: String },
+    seatType: {
+        type: String,
+        enum: ["Gold", "Silver", "Bronze", "Vip"],
+        required: true,
+        default: "Bronze"
+    },
+    numberofSeat: { type: String },
+    totalSeatprice: { type: String },
+    createdAt: Date,
+    updatedAt: Date
+}
+//   const userBookseat=new Schema(UserBookseat,{versionKey:false,timestamps:true});
+
+// bookingseat.plugin(mongoosePaginate)
+// let bookingseatModel = mongoose.model("bookingseat", bookingseat);
+module.exports = {
+    Auth: mongoose.model("bookingseat", bookingseat),
+    userBookseat: mongoose.model("UserBookseat", UserBookseat)
+
+}
