@@ -29,14 +29,23 @@ const sitSchema =new Schema({
     vipSeat: {
         type: String,
     },
-    holdSeat: {
+    holdgoldSeat: {
         type: String,
     },
-    userType: {
+    holdSilverSeat: {
         type: String,
-        enum: ["USER", "ORGANIZER"],
-        default: "USER"
     },
+    holdVipSeat: {
+        type: String,
+    },
+    holdbronzeSeat: {
+        type: String,
+    },
+    // userType: {
+    //     type: String,
+    //     enum: ["ADMIN"],
+    //     default: "ADMIN"
+    // },
     eventId: { type: String, required: true},
     userId: { type: String, required: true },
     eventCategory: {
