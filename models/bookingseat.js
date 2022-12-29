@@ -11,7 +11,16 @@ const bookingseat = new Schema({
     eventName: {
         type: String
     },
-    holdSeat: {
+    goldseathold: {
+        type: String
+    },
+    silverseathold: {
+        type: String
+    },
+    vipseathold: {
+        type: String
+    },
+    bronzseathold: {
         type: String
     },
     Remaning: {
@@ -66,19 +75,30 @@ const bookingseat = new Schema({
 
     singleSeatPrice: {
         type: Number,
-        required: true
     },
-    seatType: {
-        type: String,
-        enum: ["Gold", "Silver", "Bronze", "Vip"],
-        required: true,
-        default: "Bronze"
+    ablivaleSeatGold:{
+        type: Number
     },
-    userType: {
-        type: String,
-        enum: ["ADMIN"],
-        default: "ADMIN"
-    }
+    ablivaleSeatSilver:{
+        type: Number
+    },
+    ablivaleSeatVip:{
+        type: Number
+    },
+    ablivaleSeatBronze:{
+        type: Number
+    },
+    // seatType: {
+    //     type: String,
+    //     enum: ["Gold", "Silver", "Bronze", "Vip"],
+    //     required: true,
+    //     default: "Bronze"
+    // },
+    // userType: {
+    //     type: String,
+    //     enum: ["ADMIN"],
+    //     default: "ADMIN"
+    // }
 },
     {
         timestamps: true

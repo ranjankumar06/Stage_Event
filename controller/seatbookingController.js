@@ -9,50 +9,52 @@ module.exports =
         try {
             const AllContacts = await seatmodel.findOne()
             let { userId, eventName,  userType,
-                seatType,  holdSeat } = req.body;
+                seatType } = req.body;
             if (seatType === "Gold") {
                 var EventgoldSeat = AllContacts.goldSeat
-                var remaningseat = AllContacts.goldSeat - holdSeat
+                var ablivalegoldSeat = AllContacts.goldSeat - AllContacts.holdgoldSeat
                 // var pricecalcuate = AllContacts.goldSeatPrice * soldSeat
                 var SingleSeatPrice = AllContacts.goldSeatPrice
-                var ablivaleSeat = remaningseat - holdSeat
+                // var ablivaleSeat = remaningseat 
                 var TotalseatType=AllContacts.goldSeat+AllContacts.silverSeat
                 AllContacts.bronzeSeat+AllContacts.vipSeat
             }
             if (seatType === "Silver") {
                 var EventSilverSeat = AllContacts.silverSeat
-                var remaningseat = AllContacts.silverSeat - holdSeat
+                var ablivalesilverSeat = AllContacts.silverSeat - AllContacts.holdSilverSeat
                 // var pricecalcuate = AllContacts.silverSeatPrice * soldSeat
                 var SingleSeatPrice = AllContacts.silverSeatPrice
-                var ablivaleSeat = remaningseat - holdSeat
+                // var ablivaleSeat = remaningseat
                 var TotalseatType=AllContacts.goldSeat+AllContacts.silverSeat
                 AllContacts.bronzeSeat+AllContacts.vipSeat
             }
             if (seatType === "Bronze") {
                 var EventBronzSeat = AllContacts.bronzeSeat
-                var remaningseat = AllContacts.bronzeSeat - holdSeat
+                var ablivalebronzeSeat = AllContacts.bronzeSeat - AllContacts.holdbronzeSeat
                 // var pricecalcuate = AllContacts.bronzeSeatPrice * soldSeat
                 var SingleSeatPrice = AllContacts.bronzeSeatPrice
-                var ablivaleSeat = remaningseat - holdSeat
+                // var ablivaleSeat = remaningseat
                 var TotalseatType=AllContacts.goldSeat+AllContacts.silverSeat
                 AllContacts.bronzeSeat+AllContacts.vipSeat
             }
             if (seatType === "Vip") {
                 var EventVipSeat = AllContacts.vipSeat
-                var remaningseat = AllContacts.vipSeat - holdSeat
+                var ablivalevipSeat = AllContacts.vipSeat - AllContacts.holdVipSeat
                 // var pricecalcuate = AllContacts.vipSeatPrice * soldSeat
                 var SingleSeatPrice = AllContacts.vipSeatPrice
-                var ablivaleSeat = remaningseat - holdSeat
+                // var ablivaleSeat = remaningseat
                 var TotalseatType=AllContacts.goldSeat+AllContacts.silverSeat
                 AllContacts.bronzeSeat+AllContacts.vipSeat
             }
 
             let contactUs = await booking.Auth.create({
                 userId, eventName,  userType,
-                singleSeatPrice: SingleSeatPrice,
-                Remaning: remaningseat, seatType,
+                singleSeatPrice: SingleSeatPrice, seatType,
                 totalSeatType:TotalseatType,
-                holdSeat, available: ablivaleSeat,
+                ablivaleSeatGold: ablivalegoldSeat,
+                ablivaleSeatSilver:ablivalesilverSeat,
+                ablivaleSeatVip:ablivalevipSeat,
+                ablivaleSeatBronze:ablivalebronzeSeat,
                 eventgoldSeat: EventgoldSeat,
                 eventSilverSeat:EventSilverSeat,
                 eventBronzSeat:EventBronzSeat,
@@ -101,7 +103,6 @@ module.exports =
             });
 
             res.status(200).json({ success: true, message: 'Seat booked succesfully', contactUs });
-
 
         } catch (error) {
             console.log(error);
