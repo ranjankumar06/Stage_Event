@@ -12,41 +12,41 @@ const bookingseat = new Schema({
         type: String
     },
     goldseathold: {
-        type: String
+        type: Number
     },
     silverseathold: {
-        type: String
+        type: Number
     },
     vipseathold: {
-        type: String
+        type: Number
     },
     bronzseathold: {
-        type: String
+        type: Number
     },
     Remaning: {
-        type: String
+        type: Number
     },
     available: {
-        type: String
+        type: Number
     },
     eventgoldSeat: {
-        type: String
+        type: Number
     },
     eventSilverSeat: {
-        type: String
+        type: Number
     },
     eventBronzSeat: {
-        type: String
+        type: Number
     },
     eventVipSeat: {
-        type: String
+        type: Number
     },
 
     // email: {
     //     type: String
     // },
     totalSeatType: {
-        type: String
+        type: Number
     },
     // counter: {
     //     type: String,
@@ -115,11 +115,11 @@ const UserBookseat = {
         required: true,
         default: "Bronze"
     },
-    numberofSeat: { type: String },
+    numberofSeat: { type: Number },
     qrImg: {
         type: String,
     },
-    totalSeatprice: { type: String },
+    totalSeatprice: { type: Number },
     createdAt: Date,
     updatedAt: Date
 }
