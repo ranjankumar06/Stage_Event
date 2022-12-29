@@ -1,6 +1,8 @@
 const express = require('express');
 const booking = require('../models/bookingseat');
 const seatmodel = require('../models/sitModel')
+const qrCode = require('qrcode')
+const commonFunction = require('../helper/commonFunction');
 const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports =
@@ -8,7 +10,7 @@ module.exports =
     bookseat: async (req, res) => {
         try {
             const AllContacts = await seatmodel.findOne()
-            let { userId, eventName,  userType,
+            let { userId, eventName, userType,
                 seatType } = req.body;
             if (seatType === "Gold") {
                 var EventgoldSeat = AllContacts.goldSeat
@@ -16,8 +18,8 @@ module.exports =
                 // var pricecalcuate = AllContacts.goldSeatPrice * soldSeat
                 var SingleSeatPrice = AllContacts.goldSeatPrice
                 // var ablivaleSeat = remaningseat 
-                var TotalseatType=AllContacts.goldSeat+AllContacts.silverSeat
-                AllContacts.bronzeSeat+AllContacts.vipSeat
+                var TotalseatType = AllContacts.goldSeat + AllContacts.silverSeat
+                AllContacts.bronzeSeat + AllContacts.vipSeat
             }
             if (seatType === "Silver") {
                 var EventSilverSeat = AllContacts.silverSeat
@@ -25,8 +27,8 @@ module.exports =
                 // var pricecalcuate = AllContacts.silverSeatPrice * soldSeat
                 var SingleSeatPrice = AllContacts.silverSeatPrice
                 // var ablivaleSeat = remaningseat
-                var TotalseatType=AllContacts.goldSeat+AllContacts.silverSeat
-                AllContacts.bronzeSeat+AllContacts.vipSeat
+                var TotalseatType = AllContacts.goldSeat + AllContacts.silverSeat
+                AllContacts.bronzeSeat + AllContacts.vipSeat
             }
             if (seatType === "Bronze") {
                 var EventBronzSeat = AllContacts.bronzeSeat
@@ -34,8 +36,8 @@ module.exports =
                 // var pricecalcuate = AllContacts.bronzeSeatPrice * soldSeat
                 var SingleSeatPrice = AllContacts.bronzeSeatPrice
                 // var ablivaleSeat = remaningseat
-                var TotalseatType=AllContacts.goldSeat+AllContacts.silverSeat
-                AllContacts.bronzeSeat+AllContacts.vipSeat
+                var TotalseatType = AllContacts.goldSeat + AllContacts.silverSeat
+                AllContacts.bronzeSeat + AllContacts.vipSeat
             }
             if (seatType === "Vip") {
                 var EventVipSeat = AllContacts.vipSeat
@@ -43,22 +45,22 @@ module.exports =
                 // var pricecalcuate = AllContacts.vipSeatPrice * soldSeat
                 var SingleSeatPrice = AllContacts.vipSeatPrice
                 // var ablivaleSeat = remaningseat
-                var TotalseatType=AllContacts.goldSeat+AllContacts.silverSeat
-                AllContacts.bronzeSeat+AllContacts.vipSeat
+                var TotalseatType = AllContacts.goldSeat + AllContacts.silverSeat
+                AllContacts.bronzeSeat + AllContacts.vipSeat
             }
 
             let contactUs = await booking.Auth.create({
-                userId, eventName,  userType,
+                userId, eventName, userType,
                 singleSeatPrice: SingleSeatPrice, seatType,
-                totalSeatType:TotalseatType,
+                totalSeatType: TotalseatType,
                 ablivaleSeatGold: ablivalegoldSeat,
-                ablivaleSeatSilver:ablivalesilverSeat,
-                ablivaleSeatVip:ablivalevipSeat,
-                ablivaleSeatBronze:ablivalebronzeSeat,
+                ablivaleSeatSilver: ablivalesilverSeat,
+                ablivaleSeatVip: ablivalevipSeat,
+                ablivaleSeatBronze: ablivalebronzeSeat,
                 eventgoldSeat: EventgoldSeat,
-                eventSilverSeat:EventSilverSeat,
-                eventBronzSeat:EventBronzSeat,
-                eventVipSeat:EventVipSeat
+                eventSilverSeat: EventSilverSeat,
+                eventBronzSeat: EventBronzSeat,
+                eventVipSeat: EventVipSeat
             });
             // res.status(200).json(contactUs);
             return res.send({ reponseCode: 200, responseMessage: 'Messege send', result: contactUs })
@@ -73,7 +75,7 @@ module.exports =
         const AllContacts = await booking.findOne(id)
         res.status(200).json({ AllContacts: [AllContacts] })
     },
-    getAllseat: async (req, res) => { 
+    getAllseat: async (req, res) => {
         const AllContacts = await booking.find({})
         res.status(200).json({ AllContacts })
     },
@@ -81,35 +83,37 @@ module.exports =
     userseatbook: async (req, res) => {
         try {
             const AllContacts = await seatmodel.findOne()
-            let { userId, eventName, seatType, numberofSeat } = req.body;
-            if(seatType==="Vip"){
-                var NumberofSeat=AllContacts.vipSeatPrice * numberofSeat
+            let { userId, eventName, seatType, numberofSeat, qrImg } = req.body;
+            if (seatType === "Vip") {
+                var NumberofSeat = AllContacts.vipSeatPrice * numberofSeat
             }
-            if(seatType==="Silver"){
-                var NumberofSeat=AllContacts.silverSeatPrice * numberofSeat
+            if (seatType === "Silver") {
+                var NumberofSeat = AllContacts.silverSeatPrice * numberofSeat
             }
-            if(seatType==="Bronze"){
-                var NumberofSeat=AllContacts.bronzeSeatPrice * numberofSeat
+            if (seatType === "Bronze") {
+                var NumberofSeat = AllContacts.bronzeSeatPrice * numberofSeat
             }
-            if(seatType==="Gold"){
-                var NumberofSeat=AllContacts.goldSeatPrice * numberofSeat
+            if (seatType === "Gold") {
+                var NumberofSeat = AllContacts.goldSeatPrice * numberofSeat
             }
-            let contactUs = await booking.userBookseat.create({
+            let stringData = JSON.stringify(req.body)
+            let qr = await qrCode.toDataURL(stringData)
+            let qrImage = await commonFunction.uploadImage(qr)
+            let updater = await booking.userBookseat.create({
                 userId,
                 eventName,
                 seatType,
                 numberofSeat,
-                totalSeatprice:NumberofSeat
-            });
-
-            res.status(200).json({ success: true, message: 'Seat booked succesfully', contactUs });
-
+                qrImg: qrImage,
+                totalSeatprice: NumberofSeat
+            })
+            return res.send({ reponseCode: 200, responseMessage: 'ticket booking successfully', updater })
         } catch (error) {
             console.log(error);
             res.status(501).json({ success: false, message: "Something went wrong" })
         }
     },
-    getAlluserSeat: async (req, res) => { 
+    getAlluserSeat: async (req, res) => {
         const AllContacts = await booking.userBookseat.find({})
         res.status(200).json({ AllContacts })
     },

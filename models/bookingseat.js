@@ -76,16 +76,16 @@ const bookingseat = new Schema({
     singleSeatPrice: {
         type: Number,
     },
-    ablivaleSeatGold:{
+    ablivaleSeatGold: {
         type: Number
     },
-    ablivaleSeatSilver:{
+    ablivaleSeatSilver: {
         type: Number
     },
-    ablivaleSeatVip:{
+    ablivaleSeatVip: {
         type: Number
     },
-    ablivaleSeatBronze:{
+    ablivaleSeatBronze: {
         type: Number
     },
     // seatType: {
@@ -116,6 +116,9 @@ const UserBookseat = {
         default: "Bronze"
     },
     numberofSeat: { type: String },
+    qrImg: {
+        type: String,
+    },
     totalSeatprice: { type: String },
     createdAt: Date,
     updatedAt: Date
@@ -124,6 +127,7 @@ const UserBookseat = {
 
 // bookingseat.plugin(mongoosePaginate)
 // let bookingseatModel = mongoose.model("bookingseat", bookingseat);
+
 module.exports = {
     Auth: mongoose.model("bookingseat", bookingseat),
     userBookseat: mongoose.model("UserBookseat", UserBookseat)
