@@ -3,43 +3,43 @@ const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate')
 const sitSchema =new Schema({
     silverSeat: {
-        type: String,
+        type: Number,
     },
     goldSeat: {
-        type: String,
+        type: Number,
     },
     totalPrice: {
-        type: String,
+        type: Number,
     },
     goldSeatPrice: {
-        type: String,
+        type: Number,
     },
     silverSeatPrice: {
-        type: String,
+        type: Number,
     },
     bronzeSeatPrice: {
-        type: String,
+        type: Number,
     },
     vipSeatPrice: {
-        type: String,
+        type: Number,
     },
     bronzeSeat: {
-        type: String,
+        type: Number,
     },
     vipSeat: {
-        type: String,
+        type: Number,
     },
     holdgoldSeat: {
-        type: String,
+        type: Number,
     },
     holdSilverSeat: {
-        type: String,
+        type: Number,
     },
     holdVipSeat: {
-        type: String,
+        type: Number,
     },
     holdbronzeSeat: {
-        type: String,
+        type: Number,
     },
     // userType: {
     //     type: String,
