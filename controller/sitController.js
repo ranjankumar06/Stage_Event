@@ -22,7 +22,6 @@ module.exports =
                 holdbronzeSeat,
             } = req.body;
 
-
             let CreateSeat = await seattModel.create({
                 eventCategory, holdgoldSeat,
                 holdSilverSeat, holdVipSeat,
@@ -32,47 +31,27 @@ module.exports =
                 silverSeatPrice, bronzeSeatPrice,
                 vipSeatPrice, eventId, userId
             });
-            // console.log(CreateSeat,"CreateSeatCreateSeatCreateSeat")
             if (CreateSeat) {
-                // const AllContacts = await seattModel.findOne()
-                // let { userId, eventName,  userType,
-                //     seatType } = req.body;
-                // if (seatType === "Gold") {
-                    var EventgoldSeat = CreateSeat.goldSeat
-                    var ablivalegoldSeat = CreateSeat.goldSeat - CreateSeat.holdgoldSeat
-                    // var pricecalcuate = CreateSeat.goldSeatPrice * soldSeat
-                    // var SingleSeatPrice = CreateSeat.goldSeatPrice
-                    // var ablivaleSeat = remaningseat 
-                    var TotalseatType = (+CreateSeat.silverSeat) + (+CreateSeat.goldSeat) +
+                var EventgoldSeat = CreateSeat.goldSeat
+                var ablivalegoldSeat = CreateSeat.goldSeat - CreateSeat.holdgoldSeat
+                var TotalseatType = (+CreateSeat.silverSeat) + (+CreateSeat.goldSeat) +
                     (+CreateSeat.bronzeSeat) + (+CreateSeat.vipSeat)
-                // }
-                // if (seatType === "Silver") {
-                    var EventSilverSeat = CreateSeat.silverSeat
-                    var ablivalesilverSeat = CreateSeat.silverSeat - CreateSeat.holdSilverSeat
-                    // var pricecalcuate = CreateSeat.silverSeatPrice * soldSeat
-                    // var SingleSeatPrice = CreateSeat.silverSeatPrice
-                    // var ablivaleSeat = remaningseat
-                    var TotalseatType = (+CreateSeat.silverSeat) + (+CreateSeat.goldSeat) +
+
+                var EventSilverSeat = CreateSeat.silverSeat
+                var ablivalesilverSeat = CreateSeat.silverSeat - CreateSeat.holdSilverSeat
+                var TotalseatType = (+CreateSeat.silverSeat) + (+CreateSeat.goldSeat) +
                     (+CreateSeat.bronzeSeat) + (+CreateSeat.vipSeat)
-                // }
-                // if (seatType === "Bronze") {
-                    var EventBronzSeat = CreateSeat.bronzeSeat
-                    var ablivalebronzeSeat = CreateSeat.bronzeSeat - CreateSeat.holdbronzeSeat
-                    // var pricecalcuate = CreateSeat.bronzeSeatPrice * soldSeat
-                    // var SingleSeatPrice = CreateSeat.bronzeSeatPrice
-                    // var ablivaleSeat = remaningseat
-                    var TotalseatType = (+CreateSeat.silverSeat) + (+CreateSeat.goldSeat) +
+
+                var EventBronzSeat = CreateSeat.bronzeSeat
+                var ablivalebronzeSeat = CreateSeat.bronzeSeat - CreateSeat.holdbronzeSeat
+                var TotalseatType = (+CreateSeat.silverSeat) + (+CreateSeat.goldSeat) +
                     (+CreateSeat.bronzeSeat) + (+CreateSeat.vipSeat)
-                // }
-                // if (seatType === "Vip") {
-                    var EventVipSeat = CreateSeat.vipSeat
-                    var ablivalevipSeat = CreateSeat.vipSeat - CreateSeat.holdVipSeat
-                    // var pricecalcuate = CreateSeat.vipSeatPrice * soldSeat
-                    // var SingleSeatPrice = CreateSeat.vipSeatPrice
-                    // var ablivaleSeat = remaningseat
-                    var TotalseatType = (+CreateSeat.silverSeat) + (+CreateSeat.goldSeat) +
+
+                var EventVipSeat = CreateSeat.vipSeat
+                var ablivalevipSeat = CreateSeat.vipSeat - CreateSeat.holdVipSeat
+                var TotalseatType = (+CreateSeat.silverSeat) + (+CreateSeat.goldSeat) +
                     (+CreateSeat.bronzeSeat) + (+CreateSeat.vipSeat)
-                // }
+
 
                 let contactUs = await bookseat.Auth.create({
                     userId,
@@ -85,13 +64,12 @@ module.exports =
                     eventSilverSeat: EventSilverSeat,
                     eventBronzSeat: EventBronzSeat,
                     eventVipSeat: EventVipSeat,
-                    goldseathold:holdgoldSeat,
-                    silverseathold:holdSilverSeat,
-                    vipseathold:holdVipSeat,
-                    bronzseathold:holdbronzeSeat
+                    goldseathold: holdgoldSeat,
+                    silverseathold: holdSilverSeat,
+                    vipseathold: holdVipSeat,
+                    bronzseathold: holdbronzeSeat
                 });
             }
-
             res.status(200).json({ success: true, message: 'CreateSeat save succesfully', CreateSeat });
         } catch (error) {
             console.log(error);
