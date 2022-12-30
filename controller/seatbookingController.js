@@ -75,10 +75,7 @@ module.exports =
         const AllContacts = await booking.findOne(id)
         res.status(200).json({ AllContacts: [AllContacts] })
     },
-    getAllseat: async (req, res) => {
-        const AllContacts = await booking.find({})
-        res.status(200).json({ AllContacts })
-    },
+    
 
     userseatbook: async (req, res) => {
         try {
