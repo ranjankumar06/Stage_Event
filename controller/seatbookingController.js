@@ -70,13 +70,7 @@ module.exports =
             res.status(501).json({ success: false, message: "Something went wrong" })
         }
     },
-    getseat: async (req, res) => {
-        const id = req.params._id;
-        const AllContacts = await booking.findOne(id)
-        res.status(200).json({ AllContacts: [AllContacts] })
-    },
     
-
     userseatbook: async (req, res) => {
         try {
             const AllContacts = await seatmodel.findOne()
@@ -113,5 +107,11 @@ module.exports =
     getAlluserSeat: async (req, res) => {
         const AllContacts = await booking.userBookseat.find({})
         res.status(200).json({ AllContacts })
+    },
+
+    getseat: async (req, res) => {
+        const id = req.params._id;
+        const AllContacts = await booking.userBookseat.findOne(id)
+        res.status(200).json({ AllContacts: [AllContacts] })
     },
 }
