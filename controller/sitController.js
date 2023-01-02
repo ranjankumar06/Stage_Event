@@ -94,5 +94,9 @@ module.exports =
         }
     },
 
+    getAllseat: async (req, res) => {
+        const AllContacts = await bookseat.Auth.find({})
+        res.status(200).json({ AllContacts })
+    },
 
 }

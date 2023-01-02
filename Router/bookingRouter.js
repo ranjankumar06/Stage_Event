@@ -12,9 +12,9 @@ var storage = multer.diskStorage({
   })
   
 const upload = multer({storage:storage})
+
 router.post("/bookseat",BookingSeat.bookseat)
 router.get("/getseat/:id",BookingSeat.getseat)
-router.get("/getallseat",BookingSeat.getAllseat)
 // router.post("/userseatbook",BookingSeat.userseatbook)
 router.get("/getAlluserSeat",BookingSeat.getAlluserSeat)
 
