@@ -87,17 +87,19 @@ module.exports =
             if (seatType === "Gold") {
                 var NumberofSeat = AllContacts.goldSeatPrice * numberofSeat
             }
-            let stringData = JSON.stringify(req.body)
+            for(let i=1;i<=req.body.numberofSeat; i++ ){
+            let stringData = JSON.stringify({...req.body,seatNo:i})
             let qr = await qrCode.toDataURL(stringData)
             let qrImage = await commonFunction.uploadImage(qr)
-            let updater = await booking.userBookseat.create({
+            var updater = await booking.userBookseat.create({
                 userId,
                 eventName,
                 seatType,
-                numberofSeat,
+                seatNo:i,
                 qrImg: qrImage,
                 totalSeatprice: NumberofSeat
             })
+        }
             return res.send({ reponseCode: 200, responseMessage: 'ticket booking successfully', updater })
         } catch (error) {
             console.log(error);
@@ -110,7 +112,7 @@ module.exports =
     },
 
     getseat: async (req, res) => {
-        const id = req.params._id;
+        const id = req.params.userId;
         const AllContacts = await booking.userBookseat.findOne(id)
         res.status(200).json({ AllContacts: [AllContacts] })
     },
