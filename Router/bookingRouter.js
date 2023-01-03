@@ -13,15 +13,11 @@ var storage = multer.diskStorage({
   
 const upload = multer({storage:storage})
 
-router.post("/bookseat",BookingSeat.bookseat)
-router.get("/getseat/:id",BookingSeat.getseat)
+// router.post("/bookseat",BookingSeat.bookseat)
 // router.post("/userseatbook",BookingSeat.userseatbook)
+
+router.get("/getseat/:id",BookingSeat.getseat)
 router.get("/getAlluserSeat",BookingSeat.getAlluserSeat)
-
 router.post("/ticketBook",upload.array('image'),BookingSeat.userseatbook)
-
-
-// router.get('/geteventById1/:eventId',sitRouter.wishListGet)
-
 
 module.exports =router
