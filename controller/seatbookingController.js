@@ -74,7 +74,7 @@ module.exports =
     userseatbook: async (req, res) => {
         try {
             const AllContacts = await seatmodel.findOne()
-            let { userId, eventName, seatType, numberofSeat, qrImg } = req.body;
+            let { userId, eventName, seatType, numberofSeat, } = req.body;
             if (seatType === "Vip") {
                 var NumberofSeat = AllContacts.vipSeatPrice * numberofSeat
             }
@@ -88,7 +88,7 @@ module.exports =
                 var NumberofSeat = AllContacts.goldSeatPrice * numberofSeat
             }
             for(let i=1;i<=req.body.numberofSeat; i++ ){
-            let stringData = JSON.stringify({...req.body,seatNo:i})
+            let stringData = JSON.stringify({userId,eventName, seatType,seatNo:i+"/"+numberofSeat})
             let qr = await qrCode.toDataURL(stringData)
             let qrImage = await commonFunction.uploadImage(qr)
             var updater = await booking.userBookseat.create({
